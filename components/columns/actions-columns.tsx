@@ -17,7 +17,7 @@ export function addActionsColumn<TData>(
         return (
           <div className="flex gap-2">
             <Button size="sm" variant="outline" onClick={() => handleEdit(rowData)}>
-              <SquarePen/>
+              <SquarePen />
             </Button>
             <Button size="sm" variant="destructive" onClick={() => handleDelete(rowData)}>
               <Trash/>

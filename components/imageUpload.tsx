@@ -5,7 +5,7 @@ import type { OurFileRouter } from "@/app/api/uploadthing/core";
 import { UploadCloudIcon, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-
+import {toast} from "sonner"
 interface ImageUploaderProps {
   endpoint: keyof OurFileRouter;
   onUploadComplete: (url: string) => void;
@@ -22,7 +22,6 @@ export default function ImageUploader({
 }: ImageUploaderProps) {
   const [imageUrl, setImageUrl] = useState<string | null>(initialImageUrl || null);
   const [isUploading, setIsUploading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     setImageUrl(initialImageUrl || null);
@@ -30,7 +29,6 @@ export default function ImageUploader({
 
   const handleDelete = () => {
     setImageUrl(null);
-    setErrorMessage(null);
     if (onDelete) onDelete();
   };
 
@@ -61,7 +59,6 @@ export default function ImageUploader({
         endpoint={endpoint}
         onUploadBegin={() => {
           setIsUploading(true);
-          setErrorMessage(null);
         }}
         onClientUploadComplete={(res) => {
           setIsUploading(false);
@@ -73,14 +70,13 @@ export default function ImageUploader({
         }}
         onUploadError={() => {
           setIsUploading(false);
-          setErrorMessage("Upload failed. Please try again or use a smaller image (max 2 MB).");
-          // ❌ no console.log or technical errors shown
+          toast.error("Upload failed. Please try again or use a smaller image (max 2 MB).")
         }}
         appearance={{
           container:
             "flex flex-col items-center justify-center h-48 w-full max-w-sm text-center p-4 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors",
           button:
-            "bg-[#676e32] text-white rounded-md px-4 py-4 mt-4 hover:bg-[#7b8444]",
+            "bg-black text-white rounded-md px-4 py-4 mt-4 hover:bg-gray-700",
           label: "text-gray-500 dark:text-gray-400",
         }}
         content={{
@@ -100,13 +96,6 @@ export default function ImageUploader({
           allowedContent: null,
         }}
       />
-
-      {/* ✅ Friendly message only */}
-      {errorMessage && (
-        <p className="text-red-600 text-sm font-medium mt-2 text-center">
-          {errorMessage}
-        </p>
-      )}
     </div>
   );
 }

@@ -68,7 +68,7 @@ export const userColumns: ColumnDef<user>[] = [
       return (
         <a
           href={`mailto:${email}`}
-          className="underline text-[#676e32] hover:text-[#a2b41d]"
+          className="underline text-gray-900 hover:text-gray-600"
         >
           {email}
         </a>

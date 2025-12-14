@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 
 interface DeleteActionProps {
-  ids: string[]; // can be 1 or many
+  ids: string[]; 
   deleteAction: (id: string) => Promise<void>;
   onFinish?: () => void;
 }
@@ -60,8 +60,8 @@ export default function BulkDeleteButton({
       {/* CONFIRMATION DIALOG */}
       <DialogContent className="sm:max-w-[400px]">
         <DialogHeader>
-          <DialogTitle>Confirm Delete</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-black">Confirm Delete</DialogTitle>
+          <DialogDescription className="text-gray-700">
             Are you sure you want to delete {ids.length} item(s)?  
             <br />
             This action cannot be undone.
@@ -74,6 +74,7 @@ export default function BulkDeleteButton({
             variant="outline"
             onClick={() => setOpen(false)}
             disabled={loading}
+            className="bg-gray-200  hover:bg-gray-300 text-gray-700"
           >
             Cancel
           </Button>

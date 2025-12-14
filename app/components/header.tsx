@@ -2,10 +2,16 @@
 import { useState, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
+import Languageswitcher from "@/app/components/language-switcher"
+import { useTranslations } from "next-intl";
+
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const t = useTranslations("nav");
+
+  const sections = ["home","about","skills","experience","education","activities","contact"];
 
   const handleClick = (id: string) => {
     setOpen(false);
@@ -47,14 +53,22 @@ export default function Header() {
   return (
     <header className="nav w-full fixed top-0 left-0 z-50 transition-colors duration-300">
       <div className="max-w-6xl mx-auto flex items-center justify-between py-6 px-4 md:justify-self-center">
+
+        {/* DESKTOP NAV */}
         <nav className="hidden md:flex gap-8 font-medium text-white">
-          {["home","about","skills","experience","education","activities","contact"].map((section) => (
-            <button key={section} onClick={() => handleClick(section)} className="hover:scale-110 duration-300 transition-all">
-              {section.charAt(0).toUpperCase() + section.slice(1)}
+          {sections.map((section) => (
+            <button 
+              key={section} 
+              onClick={() => handleClick(section)}
+              className="hover:scale-110 duration-300 transition-all"
+            >
+              {t(section)}
             </button>
           ))}
+          <Languageswitcher />
         </nav>
 
+        {/* MOBILE BUTTON */}
         <button
           className="md:hidden text-3xl mx-10 md:mx-0"
           onClick={() => setOpen(!open)}
@@ -64,11 +78,12 @@ export default function Header() {
         </button>
       </div>
 
+      {/* MOBILE NAV */}
       {open && (
-        <nav className="md:hidden bg-gray-800 shadow-md py-4 px-6 flex flex-col items-center gap-4 text-whitetext-lg font-medium">
-          {["home","about","skills","experience","education","activities","contact"].map((section) => (
+        <nav className="md:hidden bg-gray-800 shadow-md py-4 px-6 flex flex-col items-center gap-4 text-white text-lg font-medium">
+          {sections.map((section) => (
             <button key={section} onClick={() => handleClick(section)}>
-              {section.charAt(0).toUpperCase() + section.slice(1)}
+              {t(section)}
             </button>
           ))}
         </nav>

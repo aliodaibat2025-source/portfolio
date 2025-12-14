@@ -38,7 +38,7 @@ export const SkillColumns: ColumnDef<NewSkill>[] = [
     ),
     cell: ({ row }) => {
       const name = row.getValue("name_en") as string;
-      return <div className="text-gray-800 font-medium">{name}</div>;
+      return <div className="text-gray-600 font-medium">{name}</div>;
     },
     enableSorting: true,
   },
@@ -56,7 +56,7 @@ export const SkillColumns: ColumnDef<NewSkill>[] = [
     cell: ({ row }) => {
       const name = row.getValue("name_ar") as string;
       return (
-        <div className="text-gray-800 font-medium" >
+        <div className="text-gray-600 font-medium" >
           {name}
         </div>
       );
@@ -76,7 +76,7 @@ export const SkillColumns: ColumnDef<NewSkill>[] = [
     ),
     cell: ({ row }) => {
       const desc = row.getValue("description_en") as string;
-      return <div className="text-gray-800 font-medium">{desc.slice(0, 35) + "..."}</div>;
+      return <div className="text-gray-600 font-medium">{desc.slice(0, 35) + "..."}</div>;
     },
     enableSorting: true,
   },
@@ -94,7 +94,7 @@ export const SkillColumns: ColumnDef<NewSkill>[] = [
     cell: ({ row }) => {
       const desc = row.getValue("description_ar") as string;
       return (
-        <div className="text-gray-800 font-medium" >
+        <div className="text-gray-600 font-medium" >
           {desc.slice(0, 35) + "..."}
         </div>
       );

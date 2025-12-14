@@ -51,14 +51,14 @@ export default function DeleteButton({
       </DialogTrigger>
       <DialogContent className="sm:max-w-[400px]">
         <DialogHeader>
-          <DialogTitle>Confirm Delete</DialogTitle>
-          <DialogDescription>
-            Are you sure you want to delete this user?
+          <DialogTitle className="text-black">Confirm Delete</DialogTitle>
+          <DialogDescription className="text-gray-800">
+            Are you sure you want to permanently delete this?
           </DialogDescription>
         </DialogHeader>
         <div className="mt-4 flex justify-end gap-2">
           <DialogTrigger asChild>
-            <button className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300" onClick={() => setOpen(false)}>
+            <button className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 text-gray-700" onClick={() => setOpen(false)}>
               Cancel
             </button>
           </DialogTrigger>

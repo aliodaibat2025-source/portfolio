@@ -25,7 +25,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { newSettingSchema } from "@/app/models/db/lib/schemas/settingsSchema";
-
+import {toast} from "sonner"
 const formSchema = z
   .object({ id: z.string().optional() })
   .merge(newSettingSchema);
@@ -52,10 +52,6 @@ export default function CreateNewSetting({
 }: Props) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [toast, setToast] = useState<{
-    message: string;
-    type: "success" | "error";
-  } | null>(null);
   const [isUploadingEn, setIsUploadingEn] = useState(false);
   const [isUploadingAr, setIsUploadingAr] = useState(false);
 
@@ -191,11 +187,7 @@ export default function CreateNewSetting({
 
   const handleImageUploadErrorEn = () => {
     setIsUploadingEn(false);
-    setToast({
-      message: "Image upload failed. Please try again.",
-      type: "error",
-    });
-    setTimeout(() => setToast(null), 3000);
+    toast.error("Image upload failed. Please try again.")
   };
 
   const handleVideoUploadCompleteEn = (res: { url: string }[]) => {
@@ -203,21 +195,13 @@ export default function CreateNewSetting({
     if (res && res[0]) {
       setValue("value_en", res[0].url, { shouldValidate: true });
     } else {
-      setToast({
-        message: "Video upload failed. No file returned.",
-        type: "error",
-      });
-      setTimeout(() => setToast(null), 3000);
+      toast.error("Video upload failed. No file returned.")
     }
   };
 
   const handleVideoUploadErrorEn = () => {
     setIsUploadingEn(false);
-    setToast({
-      message: "Video upload failed. Please try again.",
-      type: "error",
-    });
-    setTimeout(() => setToast(null), 3000);
+    toast.error("Video upload failed. Please try again.")
   };
 
   const onSubmit = async (data: FormSchema) => {
@@ -237,15 +221,12 @@ export default function CreateNewSetting({
         };
 
         await action(payload);
-        setToast({ message: "Setting added successfully!", type: "success" });
+        toast.success("Setting added successfully!")
         setTimeout(() => {
-          setToast(null);
           router.replace("/admin/dashboard/settings");
         }, 1500);
       } catch (err) {
-        console.error(err);
-        setToast({ message: "Failed to add Setting.", type: "error" });
-        setTimeout(() => setToast(null), 3000);
+        toast.error("Failed to add Setting.")
       }
     });
   };
@@ -350,7 +331,6 @@ export default function CreateNewSetting({
               endpoint="settings"
               onUploadBegin={() => {
                 setIsUploadingEn(true);
-                setToast(null);
               }}
               onClientUploadComplete={handleVideoUploadCompleteEn}
               onUploadError={handleVideoUploadErrorEn}
@@ -533,7 +513,7 @@ export default function CreateNewSetting({
 
                 <button
                   type="submit"
-                  className="bg-[#125892] text-white px-4 py-2 rounded-md cursor-pointer hover:bg-[#0f4473]"
+                  className="bg-black text-white px-4 py-2 rounded-md cursor-pointer hover:text-gray-700"
                   disabled={
                     isSubmitting || isPending || isUploadingEn || isUploadingAr
                   }
@@ -549,16 +529,6 @@ export default function CreateNewSetting({
           </CardContent>
         </Card>
       </form>
-
-      {toast && (
-        <div
-          className={`fixed bottom-5 right-5 z-50 px-5 py-3 rounded-lg shadow-lg text-white font-medium transition-all duration-300 ${
-            toast.type === "success" ? "bg-green-600" : "bg-red-600"
-          }`}
-        >
-          {toast.message}
-        </div>
-      )}
     </main>
   );
 }

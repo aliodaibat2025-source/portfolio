@@ -2,6 +2,7 @@
 
 import { newSetting } from "@/types";
 import pool from "../index";
+type Locale = "en" | "ar";
 
 export const addNewSetting = async (newSetting: newSetting) => {
   const result = await pool.query(
@@ -63,4 +64,18 @@ export const deleteSettings = async (id: string) => {
     const result = await pool.query("delete from settings where id=$1", [id]);
     return result.rows;
   }
+};
+
+export const getSettingbyLocale = async (
+  locale: Locale
+): Promise<newSetting | null> => {
+  const post = await getSettingsData();
+
+  if (!post) return null;
+
+  return {
+    ...post,
+    key_name_en: locale === "ar" ? post.key_name_ar : post.key_name_en,
+    value_en: locale === "ar" ? post.value_ar : post.value_en,
+  };
 };

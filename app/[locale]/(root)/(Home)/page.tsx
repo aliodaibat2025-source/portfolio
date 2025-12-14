@@ -6,6 +6,7 @@ import Experience from "@/app/components/experience";
 import Education from "@/app/components/education";
 import Activities from "@/app/components/activities";
 import Contact from "@/app/components/contact";
+import {sendEmailAction} from "@/app/[locale]/admin/dashboard/emails/(actions)/sendEmail"
 export default function Home() {
   return (
     <main className=" scroll-smooth text-black">
@@ -15,7 +16,7 @@ export default function Home() {
       <Experience />
       <Education />
       <Activities />
-      <Contact />
+      <Contact   emailAction={sendEmailAction} />
     </main>
   );
 }

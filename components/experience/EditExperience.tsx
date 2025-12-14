@@ -26,8 +26,6 @@ interface Props {
 export default function EditExperienceForm({ experience, action }: Props) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-
-  // initialize start/end as Date objects (or null)
   const initialStart =
     experience.start_date ? new Date(experience.start_date) : new Date();
   const initialEnd =
@@ -52,7 +50,6 @@ export default function EditExperienceForm({ experience, action }: Props) {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // Generic input handler for text/textarea
   const handleInputChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -75,7 +72,6 @@ export default function EditExperienceForm({ experience, action }: Props) {
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  // Month input change (value looks like "2025-12")
   const handleMonthChange = (name: "start_date" | "end_date", value: string) => {
     const date = value ? new Date(`${value}-01T00:00:00`) : null;
     setForm((prev) => ({ ...prev, [name]: date }));
@@ -83,9 +79,7 @@ export default function EditExperienceForm({ experience, action }: Props) {
   };
 
  const handleFormSubmit = () => {
-  // -----------------------------------------
-  // 1) Build clean payload for Zod validation
-  // -----------------------------------------
+
   const payloadForValidation = {
     ...form,
     start_date:
@@ -114,12 +108,8 @@ export default function EditExperienceForm({ experience, action }: Props) {
     return;
   }
 
-  // validation passed
   setErrors({});
 
-  // -----------------------------------------
-  // 2) Submit to server
-  // -----------------------------------------
   startTransition(async () => {
     try {
       const finalPayload: NewExperience = {
@@ -136,14 +126,9 @@ export default function EditExperienceForm({ experience, action }: Props) {
       };
 
       const result = await action(form.id ?? "", finalPayload);
-console.log("result: ",result);
 
-      // -----------------------------------------
-      // 3) Handle backend error responses
-      // -----------------------------------------
       if (result?.status !== 200) {
         if (result.status === 400) {
-          // Specific rule: user already has current job
           if (result.message?.toLowerCase().includes("current job")) {
             setErrors((prev) => ({
               ...prev,
@@ -156,9 +141,6 @@ console.log("result: ",result);
         return;
       }
 
-      // -----------------------------------------
-      // 4) Success
-      // -----------------------------------------
       toast.success("Experience updated successfully!");
 
       setTimeout(() => {

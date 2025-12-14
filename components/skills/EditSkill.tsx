@@ -146,7 +146,7 @@ export default function EditSkillForm({ skill, action }: Props) {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-md bg-[#676e32] text-white cursor-pointer hover:bg-[#7b8444] transition"
+                  className="px-5 py-2 rounded-md bg-black text-white cursor-pointer hover:bg-gray-700 transition"
                   disabled={isPending}
                 >
                   {isPending ? "Updating..." : "Save Changes"}

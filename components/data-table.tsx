@@ -124,7 +124,7 @@ console.log("table.getSelectedRowModel(): ",table.getSelectedRowModel());
   );
 
   return (
-    <div className="space-y-4 mb-20 ml-0 mr-0 lg:ml-4 lg:mr-4 w-full">
+    <div className="space-y-4 mb-20 ml-0 mr-0 lg:ml-4 lg:mr-4 w-full text-gray-600">
       {/* === Column Visibility Menu === */}
       <div className="flex justify-end flex-row items-end gap-2">
          {selectedIds.length > 0 && (

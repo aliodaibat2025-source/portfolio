@@ -405,7 +405,7 @@ export type NewEmail = {
   phone_nmuber?: string;
   subject: string;
   description: string;
-  sent_id?: Date;
+ sent_at?: Date;
 };
 
 export type NewExperience = {

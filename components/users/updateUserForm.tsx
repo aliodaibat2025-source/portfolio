@@ -61,7 +61,7 @@ export default function UpdateRoleForm({ userId, userRole, action }: Props) {
         </Button>
         <Button
           type="submit"
-          className="bg-[#676e32] text-white cursor-pointer hover:bg-[#87970f]" 
+          className="bg-black text-white cursor-pointer hover:bg-gray-700" 
           disabled={isPending}
         >
           {isPending ? "Updating..." : "Update Role"}

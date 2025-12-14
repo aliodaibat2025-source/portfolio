@@ -354,7 +354,7 @@ export default function CreateExperienceForm({ action }: Props) {
                   className="px-5 py-2 rounded-md bg-black text-white cursor-pointer hover:bg-gray-800 transition"
                   disabled={isPending}
                 >
-                  {isPending ? "Saving..." : "Save Changes"}
+                  {isPending ? "Adding..." : "Add Experience"}
                 </button>
               </div>
             </div>

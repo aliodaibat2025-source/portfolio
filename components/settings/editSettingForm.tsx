@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/select";
 import { UploadDropzone } from "@uploadthing/react";
 import type { OurFileRouter } from "@/app/api/uploadthing/core";
-
+import {toast} from "sonner"
 interface prop {
   setting: newSetting;
   action: (data: newSetting) => Promise<void>;
@@ -91,9 +91,6 @@ function EditSettingForm({ setting, action }: prop) {
 
   const [isPending, startTransition] = useTransition();
   const [isUploading, setIsUploading] = useState(false);
-  const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(
-    null
-  );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -106,11 +103,7 @@ function EditSettingForm({ setting, action }: prop) {
 
   const handleUploadError = (type: "image" | "video") => {
     setIsUploading(false);
-    setToast({
-      message: `${type === "image" ? "Image" : "Video"} upload failed. Please try again.`,
-      type: "error",
-    });
-    setTimeout(() => setToast(null), 3000);
+    toast.error(`${type === "image" ? "Image" : "Video"} upload failed. Please try again.`)
   };
 
   const handleVideoUploadComplete = (res: { url: string }[] | null) => {
@@ -126,15 +119,12 @@ function EditSettingForm({ setting, action }: prop) {
     startTransition(async () => {
       try {
         await action(form);
-        setToast({ message: "Setting updated successfully!", type: "success" });
+        toast.success("Setting updated successfully!")
         setTimeout(() => {
-          setToast(null);
           router.replace("/admin/dashboard/settings");
         }, 1500);
       } catch (error) {
-        console.error(error);
-        setToast({ message: "Failed to update Setting.", type: "error" });
-        setTimeout(() => setToast(null), 3000);
+        toast.error("Failed to update Setting.")
       }
     });
   };
@@ -233,7 +223,6 @@ function EditSettingForm({ setting, action }: prop) {
             endpoint="settings"
             onUploadBegin={() => {
               setIsUploading(true);
-              setToast(null);
             }}
             onClientUploadComplete={handleVideoUploadComplete}
             onUploadError={() => handleUploadError("video")}
@@ -329,16 +318,6 @@ function EditSettingForm({ setting, action }: prop) {
           </CardContent>
         </Card>
       </form>
-
-      {toast && (
-        <div
-          className={`fixed bottom-5 right-5 z-50 px-5 py-3 rounded-lg shadow-lg text-white font-medium transition-all duration-300 ${
-            toast.type === "success" ? "bg-green-600" : "bg-red-600"
-          }`}
-        >
-          {toast.message}
-        </div>
-      )}
     </main>
   );
 }
