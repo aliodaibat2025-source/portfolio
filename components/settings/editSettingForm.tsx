@@ -48,10 +48,26 @@ const defaultOptions: Option[] = [
       placeholder: "",
     },
     { value: "image_in_header", label: "Image In Header", type: "image" },
+    { value: "image_in_about", label: "Image In About", type: "image" },
     { value: "video", label: "Video", type: "video" },
     {
       value: "text_about_section",
       label: "Text In About Section",
+      type: "textarea",
+    },
+    {
+      value: "text_skill_section",
+      label: "Text In Skill Section",
+      type: "textarea",
+    },
+    {
+      value: "text_experience_section",
+      label: "Text In Experience Section",
+      type: "textarea",
+    },
+    {
+      value: "text_education_section",
+      label: "Text In Education Section",
       type: "textarea",
     },
   ];

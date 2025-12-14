@@ -4,7 +4,17 @@ import React, { useEffect } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 
-export default function Hero() {
+type dataType={
+  value:string|undefined,
+  name:string|undefined
+} 
+
+interface Props {
+  position: dataType |null
+  bioInHeader:dataType|null
+
+}
+export default function Hero({position,bioInHeader}:Props) {
 
   useEffect(() => {
     
@@ -59,10 +69,10 @@ export default function Hero() {
 
    
       <div className="overlay absolute top-0 left-0 w-full h-full 
-                      bg-gradient-to-br from-black via-gray-800 to-black 
+                     bg-linear-to-br from-black via-gray-800 to-black 
                       z-0 pointer-events-none select-none opacity-0"></div>
 
-      <div className="absolute left-0 bottom-0 w-full h-[30%] bg-gradient-to-b 
+      <div className="absolute left-0 bottom-0 w-full h-[30%] bg-linear-to-b
                       from-transparent to-black z-10"></div>
 
       <div className="hero-text relative z-20 md:w-1/2 text-left space-y-6 text-white mt-4 md:mt-0">
@@ -71,12 +81,11 @@ export default function Hero() {
         </h1>
 
         <h2 className="text-2xl sm:text-3xl font-medium text-gray-300 tracking-wide">
-          Journalist
+          {position?.value}
         </h2>
 
         <p className="text-gray-300 text-lg sm:text-xl leading-relaxed max-w-xl">
-          A dedicated journalist focused on delivering accurate, powerful,
-          and meaningful stories with integrity and depth.
+          {bioInHeader?.value}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 mt-4">
@@ -115,7 +124,7 @@ export default function Hero() {
 
         <div
           className="absolute bottom-0 left-0 w-full h-24 
-                     bg-gradient-to-t from-black to-transparent 
+                     bg-linear-to-t from-black to-transparent 
                      hidden md:block"
         ></div>
       </div>

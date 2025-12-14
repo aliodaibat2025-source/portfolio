@@ -8,13 +8,19 @@ import type { SkillTranslated } from "@/types";
 
 gsap.registerPlugin(ScrollTrigger);
 
+type dataType={
+  value:string|undefined,
+  name:string|undefined
+} 
+
 
 
 type SkillsProps = {
   skills:SkillTranslated[];
+  textInSkills:dataType|null
 };
 
-export default function Skills({ skills }: SkillsProps) {
+export default function Skills({ skills,textInSkills }: SkillsProps) {
   useEffect(() => {
     gsap.fromTo(
       ".skills-heading",
@@ -67,14 +73,14 @@ export default function Skills({ skills }: SkillsProps) {
   return (
     <section
       id="skills"
-      className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-bl from-gray-800 via-black to-gray-800 px-6 py-20"
+      className="min-h-screen flex flex-col items-center justify-center bg-linear-to-bl from-gray-800 via-black to-gray-800 px-6 py-20"
     >
       <h2 className="skills-heading text-4xl font-bold mb-8 text-white text-center">
         Skills
       </h2>
 
       <p className="skills-text text-gray-300 text-center text-lg max-w-2xl mb-12">
-        Key professional skills I use to deliver impactful stories and engage audiences effectively.
+       {textInSkills?.value}
       </p>
 
       <div className="flex flex-wrap justify-center gap-4 max-w-4xl">

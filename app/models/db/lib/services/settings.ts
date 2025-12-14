@@ -75,10 +75,10 @@ export const deleteSettings = async (id: string) => {
 export const getSettingbyLocale = async (
   locale: Locale,
   fieldName:string
-): Promise<newSetting | null> => {
+): Promise<{value:string|undefined,name:string|undefined} | null> => {
   const settings = await getSettingsData();
 
-  const selectedSetting= settings.find((ele)=>{
+  const selectedSetting= settings.find((ele:newSetting)=>{
     return ele.key_name_en===fieldName
   }) 
 
@@ -87,7 +87,8 @@ export const getSettingbyLocale = async (
 
   return {
     
-    key_name_en: locale === "ar" ? selectedSetting.key_name_ar : selectedSetting.key_name_en,
-    value_en: locale === "ar" ? selectedSetting.value_ar : selectedSetting.value_en,
+    name: locale === "ar" ? selectedSetting.key_name_ar : selectedSetting.key_name_en,
+    value: locale === "ar" ? selectedSetting.value_ar : selectedSetting.value_en,
   };
 };
+

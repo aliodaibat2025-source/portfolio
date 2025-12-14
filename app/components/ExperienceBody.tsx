@@ -36,11 +36,11 @@ const ExperienceBody = ({ experience }: ExperienceProps) => {
   return (
     <div className="min-h-screen px-6 py-20 relative">
       <div className="absolute inset-0 flex justify-center pt-16">
-        <div className="w-[2px] bg-white/50 h-full" />
+        <div className="w-0.5 bg-white/50 h-full" />
       </div>
 
       <div className="experience-grid flex flex-col items-center gap-60 mt-20 max-w-5xl mx-auto">
-        {experience.map((exp, index) => (
+        {experience!.map((exp, index) => (
           <div
             key={exp.id}
             className={`experience-card relative flex ${index % 2 === 0 ? "ml-auto" : "mr-auto"} w-full sm:w-[90%] md:w-[48%]`}

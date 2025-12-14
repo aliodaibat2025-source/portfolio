@@ -6,7 +6,17 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Education() {
+
+type dataType={
+  value:string|undefined,
+  name:string|undefined
+} 
+
+interface Props {
+  textInEducation: dataType |null
+  
+}
+export default function Education({textInEducation}:Props) {
 
   useEffect(() => {
     gsap.fromTo(
@@ -52,14 +62,14 @@ export default function Education() {
   return (
     <section
       id="education"
-      className="min-h-screen flex flex-col items-center justify-center  bg-gradient-to-bl from-gray-800 via-black to-gray-800  px-6 py-20"
+      className="min-h-screen flex flex-col items-center justify-center  bg-linear-to-bl from-gray-800 via-black to-gray-800  px-6 py-20"
     >
       <h2 className="education-heading text-4xl font-bold mb-8 text-white text-center">
         Education & Certifications
       </h2>
 
       <p className="education-text text-gray-300 text-center text-lg max-w-2xl mb-12">
-        Academic background and professional certifications that highlight my expertise and skills in journalism.
+        {textInEducation?.value}
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl w-full">

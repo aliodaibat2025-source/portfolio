@@ -76,6 +76,21 @@ export default function CreateNewSetting({
       label: "Text In About Section",
       type: "textarea",
     },
+    {
+      value: "text_skill_section",
+      label: "Text In Skill Section",
+      type: "textarea",
+    },
+    {
+      value: "text_experience_section",
+      label: "Text In Experience Section",
+      type: "textarea",
+    },
+    {
+      value: "text_education_section",
+      label: "Text In Education Section",
+      type: "textarea",
+    },
   ];
 
   const availableOptions = options ?? defaultOptions;

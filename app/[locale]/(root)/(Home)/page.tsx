@@ -9,13 +9,13 @@ import Contact from "@/app/components/contact";
 import { sendEmailAction } from "@/app/[locale]/admin/dashboard/emails/(actions)/sendEmail";
 import { getSkillsbyLocale } from "@/app/models/db/lib/services/skills";
 import { getExperiencebyLocale } from "@/app/models/db/lib/services/experience";
-
+import { getSettingbyLocale } from "@/app/models/db/lib/services/settings";
 type Locale = "en" | "ar";
 
 interface PageProps {
-  params: {
-    locale: Locale;
-  };
+  params: 
+    Promise<{locale: Locale}>
+  
 }
 
 export default async function Home({ params }: PageProps) {
@@ -24,16 +24,25 @@ export default async function Home({ params }: PageProps) {
   const skillsdata = await getSkillsbyLocale(locale);
   const skills = skillsdata?.data;
   const experiencedata=await getExperiencebyLocale(locale)
-    const experience = experiencedata?.data;
+  const experience = experiencedata?.data;
+  const position= await getSettingbyLocale(locale,"position_in_header")
+ const bioInHeader= await getSettingbyLocale(locale,"bio_in_header")
+ const textInAbout= await getSettingbyLocale(locale,"text_about_section")
+  const imageInAbout= await getSettingbyLocale("en","image_in_about")
+    const video= await getSettingbyLocale("en","video")
+    const textInSkills= await getSettingbyLocale(locale,"text_skill_section")
+  const textInExperience= await getSettingbyLocale(locale,"text_experience_section")
+    const textInEducation= await getSettingbyLocale(locale,"text_education_section")
+
 
 
   return (
     <main className=" scroll-smooth text-black">
-      <Hero />
-      <About />
-      <Skills skills={skills} />
-      <Experience  experience={experience} />
-      <Education />
+      <Hero position={position} bioInHeader={bioInHeader}/>
+      <About textInAbout={textInAbout} imageInAbout={imageInAbout} video={video}/>
+      <Skills skills={skills} textInSkills={textInSkills} />
+      <Experience  experience={experience}  textInExperience={textInExperience}/>
+      <Education textInEducation={textInEducation} />
       <Activities />
       <Contact emailAction={sendEmailAction} />
     </main>
