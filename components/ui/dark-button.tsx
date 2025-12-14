@@ -4,6 +4,7 @@ interface LightButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>
   children: React.ReactNode;
   className?: string;
 }
+//
 
 export default function DarkButton({ children, className = '', ...props }: LightButtonProps) {
   return (
