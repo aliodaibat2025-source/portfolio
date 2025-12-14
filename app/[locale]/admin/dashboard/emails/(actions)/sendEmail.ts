@@ -84,6 +84,6 @@ export const sendEmailAction= async (data:NewEmail)=>{
 
         return result
     } catch (error) {
-        
+        throw new Error("Error In Sending The Email")
     }
 }

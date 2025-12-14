@@ -13,7 +13,7 @@ export async function deleteEmailAction(emailId:string) {
 
   const result = await deleteEmail(emailId)
 
-  if (result.status!== 200) throw new Error("Failed to delete Client");
+  if (result.status!== 200) throw new Error("Failed to delete Email");
 
   revalidatePath(`/dashboard/emails`);
   

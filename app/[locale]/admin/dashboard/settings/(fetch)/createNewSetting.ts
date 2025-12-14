@@ -3,27 +3,22 @@ import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { authOptions } from "@/app/models/db/authOptions";
 import { newSetting } from "@/types";
+import { addNewSetting } from "@/app/models/db/lib/services/settings";
 
-
-
-export async function createSettings(data: newSetting) {
+export async function createSettingAction(data: newSetting) {
   const session = await getServerSession(authOptions);
   const token = session?.user.token;
- 
-  const result = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/settings`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(data)
-    }
-  );
 
-  if (!result.ok) throw new Error("Failed to Create Setting");
+  // ❗ Not logged in
+  if (!token) throw new Error("Please log in first.");
 
-  revalidatePath(`/dashboard/settings`);
-  return await result.json();
+  // ❗ Not admin
+  if (session.user.role !== "admin")
+    throw new Error("You are not allowed to perform this action.");
+  const result = await addNewSetting(data);
+
+  // Successful Cearte
+  revalidatePath(`/admin/dashboard/settings`);
+
+  return result;
 }

@@ -1,6 +1,9 @@
 import { revalidateTag, unstable_cache } from "next/cache";
 import pool from "..";
-import { type NewExperience } from "@/types/index";
+import { type NewExperience,ExperienceTranslated } from "@/types/index";
+
+type Locale = "en" | "ar";
+
 
 export const addExperience = async (data: NewExperience) => {
   try {
@@ -22,8 +25,7 @@ export const addExperience = async (data: NewExperience) => {
         data.current_job
       ]
     );
-
-    revalidateTag("experiences");
+   revalidateTag("experiences","max");
 
     return {
       data: result.rows,
@@ -91,7 +93,7 @@ export const deleteExperienceByDelete = async (id: string) => {
     const result = await pool.query("DELETE  from experience where id=$1", [
       id,
     ]);
-    revalidateTag("experiences");
+    revalidateTag("experiences","max");
     return {
       data: result.rows,
       message: "Experience Deleted Successfully",
@@ -151,7 +153,7 @@ export const editExperience = async (
       ]
     );
 
-    revalidateTag("experiences");
+   revalidateTag("experiences","max");
 
     return {
       data: result.rows,
@@ -177,4 +179,26 @@ export const editExperience = async (
       status: 500,
     };
   }
+};
+
+
+
+export const getExperiencebyLocale = async (locale: Locale) => {
+  const result = await getAllExperiences();
+
+  if (!result || !result.data) return null;
+
+  const localizedExperience = result.data.map((experience: ExperienceTranslated) => ({
+    ...experience, 
+    positions: locale === "ar" ? experience.positions_ar : experience.positions_en,
+    description: locale === "ar" ? experience.description_ar : experience.description_en,
+
+    location: locale === "ar" ? experience.location_ar : experience.location_en,
+  }));
+
+  return {
+    data: localizedExperience,
+    message: result.message,
+    status: result.status,
+  };
 };

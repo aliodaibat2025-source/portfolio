@@ -2,13 +2,13 @@
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { authOptions } from "@/app/models/db/authOptions";
-import { editExperience } from "@/app/models/db/lib/services/experience";
-import { NewExperience } from "@/types";
+import { addEducation } from "@/app/models/db/lib/services/education";
+import { NewEducation } from "@/types";
 
-export async function editExperienceAction(experienceId: string, data: NewExperience) {
+export async function createEducationAction(data:NewEducation) {
   const session = await getServerSession(authOptions);
   const token = session?.user.token;
-
+ 
   // ❗ Not logged in
   if (!token) {
     return {
@@ -25,25 +25,24 @@ export async function editExperienceAction(experienceId: string, data: NewExperi
     };
   }
 
-  // ❗ Call the DB service
-  const result = await editExperience(experienceId, data);
 
-  // Database returned structured error
-  if (!result || result?.status >= 400) {
+  const result = await addEducation(data)
+
+   if (!result || result?.status >= 400) {
     return {
       status: result?.status ?? 500,
       message:
         result?.message ??
-        "An unexpected error occurred while updating the experience.",
+        "An unexpected error occurred while updating the Education.",
     };
   }
-
-  // Successful update
-  revalidatePath(`/admin/dashboard/experience`);
+   // Successful Cearte
+  revalidatePath(`/admin/dashboard/education`);
 
   return {
     status: 200,
-    message: "Experience updated successfully.",
+    message: "Education Added successfully.",
     data: result.data,
   };
+  
 }

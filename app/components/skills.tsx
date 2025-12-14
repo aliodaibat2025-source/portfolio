@@ -1,33 +1,33 @@
-'use client'
+'use client';
 
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
+import type { SkillTranslated } from "@/types";
+
+
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Skills() {
-  const skills = [
-    "Reporting",
-    "Investigative Journalism",
-    "Interviewing",
-    "Content Writing",
-    "Editing",
-    "Broadcasting",
-    "Public Speaking",
-    "Social Media"
-  ];
 
+
+type SkillsProps = {
+  skills:SkillTranslated[];
+};
+
+export default function Skills({ skills }: SkillsProps) {
   useEffect(() => {
     gsap.fromTo(
       ".skills-heading",
       { y: 50, opacity: 0 },
       {
-        y: 0, opacity: 1, duration: 1, ease: "power3.out",
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power3.out",
         scrollTrigger: {
           trigger: ".skills-heading",
           start: "top 80%",
-          toggleActions: "play none none none"
-        }
+        },
       }
     );
 
@@ -35,12 +35,15 @@ export default function Skills() {
       ".skills-text",
       { y: 30, opacity: 0 },
       {
-        y: 0, opacity: 1, duration: 1, delay: 0.3, ease: "power3.out",
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        delay: 0.3,
+        ease: "power3.out",
         scrollTrigger: {
           trigger: ".skills-text",
           start: "top 80%",
-          toggleActions: "play none none none"
-        }
+        },
       }
     );
 
@@ -48,12 +51,15 @@ export default function Skills() {
       ".skill-tag",
       { y: 30, opacity: 0 },
       {
-        y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: "power3.out",
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power3.out",
         scrollTrigger: {
           trigger: ".skill-tag",
           start: "top 85%",
-          toggleActions: "play none none none"
-        }
+        },
       }
     );
   }, []);
@@ -61,7 +67,7 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-bl from-gray-800 via-black to-gray-800   px-6 py-20"
+      className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-bl from-gray-800 via-black to-gray-800 px-6 py-20"
     >
       <h2 className="skills-heading text-4xl font-bold mb-8 text-white text-center">
         Skills
@@ -77,7 +83,7 @@ export default function Skills() {
             key={index}
             className="skill-tag bg-gray-900 text-white shadow-lg px-5 py-2 rounded-full font-medium hover:bg-gray-700 transition cursor-default"
           >
-            {skill}
+            {skill.name}
           </span>
         ))}
       </div>

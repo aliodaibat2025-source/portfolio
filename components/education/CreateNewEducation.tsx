@@ -2,6 +2,8 @@
 
 import React, { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { NewEducation } from "@/types";
+import { newEducationSchema } from "@/app/models/db/lib/schemas/educationSchema";
 import {
   Card,
   CardContent,
@@ -10,42 +12,30 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { toast } from "sonner";
-import type { NewExperience } from "@/types";
-import {newExperienceSchema} from "@/app/models/db/lib/schemas/experienceSchema"
+
 interface Props {
-  experience: NewExperience;
-  action: (experienceId: string, data: NewExperience) => Promise<{
+  action: (data: NewEducation) => Promise<{
     status: number;
     message: string;
-    data?: NewExperience;
+    data?: NewEducation;
   }>;
 }
 
-
-
-export default function EditExperienceForm({ experience, action }: Props) {
+export default function CreateEducationForm({ action }: Props) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const initialStart =
-    experience.start_date ? new Date(experience.start_date) : new Date();
-  const initialEnd =
-    experience.end_date && !experience.current_job
-      ? new Date(experience.end_date)
-      : new Date();
 
   const [form, setForm] = useState<
-    Omit<NewExperience, "end_date"> & { end_date: Date | null }
+   NewEducation
   >({
-    id: experience.id,
-    positions_en: experience.positions_en ?? "",
-    positions_ar: experience.positions_ar ?? "",
-    description_en: experience.description_en ?? "",
-    description_ar: experience.description_ar ?? "",
-    start_date: initialStart,
-    end_date: experience.current_job ? null : initialEnd,
-    location_en: experience.location_en ?? "",
-    location_ar: experience.location_ar ?? "",
-    current_job: Boolean(experience.current_job),
+    title_en: "",
+    title_ar: "",
+    description_en: "",
+    description_ar: "",
+    start_date: new Date(),
+    end_date: new Date(),
+    location_en: "",
+    location_ar: "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -55,111 +45,83 @@ export default function EditExperienceForm({ experience, action }: Props) {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    const { name, value, type, checked } = e.target as HTMLInputElement;
-
-    if (type === "checkbox" && name === "current_job") {
-      const isCurrent = checked;
-      setForm((prev) => ({
-        ...prev,
-        current_job: isCurrent,
-        end_date: isCurrent ? null : prev.end_date ?? new Date(),
-      }));
-      setErrors((prev) => ({ ...prev, current_job: "" }));
-      return;
-    }
+    const { name, value } = e.target as HTMLInputElement;
 
     setForm((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  const handleMonthChange = (name: "start_date" | "end_date", value: string) => {
+  const handleMonthChange = (
+    name: "start_date" | "end_date",
+    value: string
+  ) => {
     const date = value ? new Date(`${value}-01T00:00:00`) : null;
     setForm((prev) => ({ ...prev, [name]: date }));
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
- const handleFormSubmit = () => {
-
-  const payloadForValidation = {
-    ...form,
-    start_date:
-      form.start_date instanceof Date ? form.start_date : new Date(),
-    end_date:
-      form.current_job
-        ? null
-        : form.end_date instanceof Date
+  const handleFormSubmit = () => {
+    const payloadForValidation = {
+      ...form,
+      start_date:
+        form.start_date instanceof Date ? form.start_date : new Date(),
+      end_date:  form.end_date instanceof Date
         ? form.end_date
-        : null,
-    current_job: Boolean(form.current_job),
-  };
+        : new Date(),
+    };
 
-  const validation = newExperienceSchema.safeParse(payloadForValidation);
+    const validation = newEducationSchema.safeParse(payloadForValidation);
 
-  if (!validation.success) {
-    const fieldErrors: Record<string, string> = {};
+    if (!validation.success) {
+      const fieldErrors: Record<string, string> = {};
+      validation.error.issues.forEach((err) => {
+        const key = (err.path && err.path[0]) || "form";
+        fieldErrors[String(key)] = err.message;
+      });
+      setErrors(fieldErrors);
+      toast.error("Please fix the highlighted fields.");
+      return;
+    }
 
-    validation.error.issues.forEach((err) => {
-      const key = (err.path && err.path[0]) || "form";
-      fieldErrors[String(key)] = err.message;
-    });
+    setErrors({});
+    startTransition(async () => {
+      try {
+        const finalPayload: NewEducation = {
+          title_en: form.title_en,
+          title_ar: form.title_ar,
+          description_en: form.description_en,
+          description_ar: form.description_ar,
+          start_date: form.start_date as Date,
+          end_date:  (form.end_date as Date),
+          location_en: form.location_en,
+          location_ar: form.location_ar
+        };
 
-    setErrors(fieldErrors);
-    toast.error("Please fix the highlighted fields.");
-    return;
-  }
-
-  setErrors({});
-
-  startTransition(async () => {
-    try {
-      const finalPayload: NewExperience = {
-        id: form.id,
-        positions_en: form.positions_en,
-        positions_ar: form.positions_ar,
-        description_en: form.description_en,
-        description_ar: form.description_ar,
-        start_date: form.start_date as Date,
-        end_date: form.current_job ? null : (form.end_date as Date | null),
-        location_en: form.location_en,
-        location_ar: form.location_ar,
-        current_job: form.current_job,
-      };
-
-      const result = await action(form.id ?? "", finalPayload);
-
-      if (result?.status !== 200) {
-        if (result.status === 400) {
-          if (result.message?.toLowerCase().includes("current job")) {
-            setErrors((prev) => ({
-              ...prev,
-              current_job: result.message,
-            }));
-          }
+        const result = await action(finalPayload);
+        if (result?.status !== 200) {
+          toast.error(result.message || "Failed to create education.");
+          return;
         }
 
-        toast.error(result.message || "Failed to update experience.");
-        return;
+        // Success
+        toast.success("education created successfully!");
+        
+        setTimeout(() =>{
+            router.replace("/admin/dashboard/education");
+  router.refresh();
+        }
+            , 800);
+      } catch (err) {
+        console.error(err);
+        toast.error("Something went wrong while creating education.");
       }
-
-      toast.success("Experience updated successfully!");
-
-      setTimeout(() => {
-        router.replace("/admin/dashboard/experience");
-      }, 800);
-
-    } catch (err) {
-      console.error(err);
-      toast.error("Something went wrong while updating.");
-    }
-  });
-};
-
+    });
+  };
 
   return (
     <main className="ml-3 xl:ml-7 mb-10 text-gray-800">
       <div className="flex flex-col border-b border-gray-300 pb-3 w-[65vw] mb-8">
-        <h1 className="text-2xl font-semibold text-black">Edit Experience</h1>
-        <p className="text-sm text-gray-600 mt-1">ID: {experience.id}</p>
+        <h1 className="text-2xl font-semibold text-black">New Education</h1>
       </div>
 
       <form
@@ -171,23 +133,25 @@ export default function EditExperienceForm({ experience, action }: Props) {
       >
         <Card className="w-full shadow-md hover:shadow-lg transition-all duration-300">
           <CardHeader>
-            <CardTitle className="text-black">Experience Details</CardTitle>
-            <CardDescription>Update the experience details below.</CardDescription>
+            <CardTitle className="text-black">Education Details</CardTitle>
+            <CardDescription>
+              Fill in the education details below.
+            </CardDescription>
           </CardHeader>
 
           <CardContent className="flex flex-col gap-6 mb-7">
-            {/* Positions */}
+            {/* Title */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 {
-                  label: "English Position",
-                  name: "positions_en",
-                  value: form.positions_en,
+                  label: "English Title",
+                  name: "title_en",
+                  value: form.title_en,
                 },
                 {
-                  label: "Arabic Position",
-                  name: "positions_ar",
-                  value: form.positions_ar,
+                  label: "Arabic Title",
+                  name: "title_ar",
+                  value: form.title_ar,
                 },
               ].map((field) => (
                 <div key={field.name} className="flex flex-col md:w-[90%]">
@@ -203,13 +167,15 @@ export default function EditExperienceForm({ experience, action }: Props) {
                     className="border border-gray-300 px-3 py-2 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-black"
                   />
                   {errors[field.name] && (
-                    <p className="text-red-500 text-sm mt-1">{errors[field.name]}</p>
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors[field.name]}
+                    </p>
                   )}
                 </div>
               ))}
             </div>
 
-            {/* Location */}
+            {/* Locations */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {[
                 {
@@ -236,64 +202,54 @@ export default function EditExperienceForm({ experience, action }: Props) {
                     className="border border-gray-300 px-3 py-2 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-black"
                   />
                   {errors[field.name] && (
-                    <p className="text-red-500 text-sm mt-1">{errors[field.name]}</p>
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors[field.name]}
+                    </p>
                   )}
                 </div>
               ))}
             </div>
 
-            {/* Dates (month inputs) */}
+            {/* Dates */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
               <div className="flex flex-col md:w-[90%]">
                 <label className="text-sm font-medium text-gray-700 mb-1">
-                  <span className="text-red-500">*</span> Start (Year &amp; Month)
+                  <span className="text-red-500">*</span> Start (Year &amp;
+                  Month)
                 </label>
                 <input
                   disabled={isPending}
                   type="month"
                   name="start_date"
-                  value={
-                    form.start_date ? (form.start_date as Date).toISOString().slice(0, 7) : ""
+                  value={form.start_date?.toISOString().slice(0, 7) || ""}
+                  onChange={(e) =>
+                    handleMonthChange("start_date", e.target.value)
                   }
-                  onChange={(e) => handleMonthChange("start_date", e.target.value)}
                   className="border border-gray-300 px-3 py-2 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-black"
                 />
                 {errors.start_date && (
-                  <p className="text-red-500 text-sm mt-1">{errors.start_date}</p>
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.start_date}
+                  </p>
                 )}
               </div>
 
               <div className="flex flex-col md:w-[90%]">
                 <div className="flex items-center justify-between mb-1">
-                  <label className="text-sm font-medium text-gray-700">End (Year &amp; Month)</label>
-                  <div className="flex items-center gap-2">
-                    <input
-                      id="current_job"
-                      name="current_job"
-                      type="checkbox"
-                      checked={form.current_job}
-                      disabled={isPending}
-                      onChange={handleInputChange}
-                    />
-                    <label htmlFor="current_job" className="text-sm text-gray-700">
-                      Current Job
-                    </label>
-                  </div>
+                  <label className="text-sm font-medium text-gray-700">
+                    End (Year &amp; Month)
+                  </label>
                 </div>
 
                 <input
-                  disabled={isPending || form.current_job}
+                  disabled={isPending}
                   type="month"
                   name="end_date"
-                  value={
-                    form.end_date && !form.current_job
-                      ? (form.end_date as Date).toISOString().slice(0, 7)
-                      : ""
+                  value={ form.end_date!.toISOString().slice(0, 7)}
+                  onChange={(e) =>
+                    handleMonthChange("end_date", e.target.value)
                   }
-                  onChange={(e) => handleMonthChange("end_date", e.target.value)}
-                  className={`border border-gray-300 px-3 py-2 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-black ${
-                    form.current_job ? "bg-gray-100 cursor-not-allowed" : ""
-                  }`}
+                  className={`border border-gray-300 px-3 py-2 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-black`}
                 />
                 {errors.end_date && (
                   <p className="text-red-500 text-sm mt-1">{errors.end_date}</p>
@@ -327,7 +283,9 @@ export default function EditExperienceForm({ experience, action }: Props) {
                     className="border border-gray-300 px-3 py-2 rounded-md text-gray-800 h-[12vh] resize-none focus:outline-none focus:ring-2 focus:ring-black"
                   />
                   {errors[field.name] && (
-                    <p className="text-red-500 text-sm mt-1">{errors[field.name]}</p>
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors[field.name]}
+                    </p>
                   )}
                 </div>
               ))}
@@ -340,7 +298,7 @@ export default function EditExperienceForm({ experience, action }: Props) {
                   disabled={isPending}
                   type="button"
                   className="px-5 py-2 rounded-md border border-gray-400 cursor-pointer text-gray-700 hover:bg-gray-100 transition"
-                  onClick={() => router.replace("/admin/dashboard/experience")}
+                  onClick={() => router.replace("/admin/dashboard/education")}
                 >
                   Cancel
                 </button>
@@ -349,7 +307,7 @@ export default function EditExperienceForm({ experience, action }: Props) {
                   className="px-5 py-2 rounded-md bg-black text-white cursor-pointer hover:bg-gray-800 transition"
                   disabled={isPending}
                 >
-                  {isPending ? "Saving..." : "Save Changes"}
+                  {isPending ? "Adding..." : "Add Education"}
                 </button>
               </div>
             </div>

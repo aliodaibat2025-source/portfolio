@@ -37,7 +37,7 @@ export async function createExperienceAction(data:NewExperience) {
     };
   }
    // Successful Cearte
-  revalidatePath(`/dashboard/experience`);
+  revalidatePath(`/admin/dashboard/experience`);
 
   return {
     status: 200,

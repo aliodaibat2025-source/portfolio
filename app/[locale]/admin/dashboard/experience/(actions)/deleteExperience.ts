@@ -10,24 +10,18 @@ export async function deleteExperienceAction(experienceId:string) {
  
   // ❗ Not logged in
   if (!token) {
-    return {
-      status: 401,
-      message: "Please log in first.",
-    };
+    throw new Error("Please log in first.")
   }
 
   // ❗ Not admin
   if (session.user.role !== "admin") {
-    return {
-      status: 403,
-      message: "You are not allowed to perform this action.",
-    };
+    throw new Error("You are not allowed to perform this action.")
   }
 
   const result = await deleteExperienceByDelete(experienceId)
 
   if (result.status!== 200) throw new Error("Failed to delete Experience");
 
-  revalidatePath(`/dashboard/experiences`);
+  revalidatePath(`/admin/dashboard/experience`);
   
 }

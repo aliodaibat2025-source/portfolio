@@ -3,7 +3,7 @@ import { getSettingsData } from "@/app/models/db/lib/services/settings";
 import { settingsColumns } from "@/components/columns/setting-columns";
 import { DataTable } from "@/components/data-table";
 import NavigationButton from "@/components/NavigationButton"
-import { deleteSetting } from "./(fetch)/deleteSetting";
+import { deleteSettingAction } from "./(fetch)/deleteSetting";
 export default async function SettingsTable() {
   const settings = await getSettingsData();
   return (
@@ -16,7 +16,7 @@ export default async function SettingsTable() {
         </h2>
       </div>
       {/* Table container */}
-      <DataTable columns={settingsColumns} data={settings} routeName="settings" deleteAction={deleteSetting}/>
+      <DataTable columns={settingsColumns} data={settings} routeName="settings" deleteAction={deleteSettingAction}/>
       <NavigationButton
             routeName="newSetting"
             value="Add New Setting"

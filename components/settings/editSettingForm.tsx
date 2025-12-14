@@ -24,7 +24,7 @@ import type { OurFileRouter } from "@/app/api/uploadthing/core";
 import {toast} from "sonner"
 interface prop {
   setting: newSetting;
-  action: (data: newSetting) => Promise<void>;
+  action: (settingId:string,data: newSetting) => Promise<newSetting[]| null>;
 }
 
 interface Option {
@@ -35,49 +35,26 @@ interface Option {
 }
 
 const defaultOptions: Option[] = [
-  {
-    value: "number_of_clients",
-    label: "Number Of Clients",
-    type: "number",
-    placeholder: "e.g. 42",
-  },
-  {
-    value: "number_of_projects",
-    label: "Number Of Projects",
-    type: "number",
-    placeholder: "e.g. 120",
-  },
-  { value: "home_video", label: "Video In Home Page", type: "video" },
-  { value: "text_home_video", label: "Text In Home Page", type: "text" },
-  { value: "part_one_header", label: "Header In Part One", type: "text" },
-  {
-    value: "part_one_description",
-    label: "Description In Part One",
-    type: "textarea",
-  },
-  { value: "part_one_image", label: "Image In Part One", type: "image" },
-  { value: "part_two_header", label: "Header In Part Two", type: "text" },
-  {
-    value: "part_two_description",
-    label: "Description In Part Two",
-    type: "textarea",
-  },
-  { value: "part_two_image", label: "Image In Part Two", type: "image" },
-  { value: "about_page_text", label: "Text In About Page", type: "textarea" },
-  { value: "vision_in_about", label: "Vision", type: "textarea" },
-    { value: "mission_in_about", label: "Mission", type: "textarea" },
-    { value: "value_one_in_about", label: "First Value (About Pge)", type: "textarea" },
-    { value: "value_two_in_about", label: "Second Value (About Pge)", type: "textarea" },
-    { value: "value_three_in_about", label: "Third Value (About Pge)", type: "textarea" },
-    { value: "our_methodology", label: "Our Methodology", type: "textarea" },
     {
-      value: "what_we_stand_for",
-      label: "What We Stand For",
+      value: "position_in_header",
+      label: "Position In Header",
+      type: "text",
+      placeholder: "",
+    },
+    {
+      value: "bio_in_header",
+      label: "Bio In Header",
+      type: "textarea",
+      placeholder: "",
+    },
+    { value: "image_in_header", label: "Image In Header", type: "image" },
+    { value: "video", label: "Video", type: "video" },
+    {
+      value: "text_about_section",
+      label: "Text In About Section",
       type: "textarea",
     },
-    { value: "what_we_value", label: "What We Value", type: "textarea" },
-    { value: "why_we_are_here", label: "Why We’re Here", type: "textarea" },
-];
+  ];
 
 function EditSettingForm({ setting, action }: prop) {
   const router = useRouter();
@@ -118,7 +95,7 @@ function EditSettingForm({ setting, action }: prop) {
   const handleFormSubmit = () => {
     startTransition(async () => {
       try {
-        await action(form);
+        await action(form.id??"",form);
         toast.success("Setting updated successfully!")
         setTimeout(() => {
           router.replace("/admin/dashboard/settings");

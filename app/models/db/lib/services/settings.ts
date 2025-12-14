@@ -2,6 +2,7 @@
 
 import { newSetting } from "@/types";
 import pool from "../index";
+import { revalidateTag, unstable_cache } from "next/cache";
 type Locale = "en" | "ar";
 
 export const addNewSetting = async (newSetting: newSetting) => {
@@ -15,14 +16,18 @@ export const addNewSetting = async (newSetting: newSetting) => {
     ]
   );
 
+  revalidateTag("settings","default")
   return result.rows;
 };
 
-export const getSettingsData = async () => {
+export const getSettingsData =  unstable_cache(async () => {
+ 
   const result = await pool.query<newSetting>("select * from settings");
 
   return result.rows;
-};
+},["all-settings"],{tags:["settings"],revalidate:3600}
+    
+  ) 
 
 export const getSettingbyId = async (id: string) => {
   const result = await pool.query<newSetting>(
@@ -50,6 +55,7 @@ export const editSetting = async (id: string, modifiedSettings: newSetting) => {
         modifiedSettings.value_ar,
       ]
     );
+    revalidateTag("settings","default")
     return result.rows;
   }
 };
@@ -67,15 +73,21 @@ export const deleteSettings = async (id: string) => {
 };
 
 export const getSettingbyLocale = async (
-  locale: Locale
+  locale: Locale,
+  fieldName:string
 ): Promise<newSetting | null> => {
-  const post = await getSettingsData();
+  const settings = await getSettingsData();
 
-  if (!post) return null;
+  const selectedSetting= settings.find((ele)=>{
+    return ele.key_name_en===fieldName
+  }) 
+
+
+  if (!selectedSetting) return null;
 
   return {
-    ...post,
-    key_name_en: locale === "ar" ? post.key_name_ar : post.key_name_en,
-    value_en: locale === "ar" ? post.value_ar : post.value_en,
+    
+    key_name_en: locale === "ar" ? selectedSetting.key_name_ar : selectedSetting.key_name_en,
+    value_en: locale === "ar" ? selectedSetting.value_ar : selectedSetting.value_en,
   };
 };

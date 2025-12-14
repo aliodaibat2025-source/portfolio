@@ -1,7 +1,7 @@
 import { revalidateTag, unstable_cache } from "next/cache";
-import pool from ".."; 
-import { NewSkill } from "@/types/index";
-
+import pool from "..";
+import { NewSkill,SkillTranslated } from "@/types/index";
+type Locale = "en" | "ar";
 
 export const addSkill = async (data: NewSkill) => {
   try {
@@ -13,14 +13,12 @@ export const addSkill = async (data: NewSkill) => {
       [data.name_en, data.name_ar, data.description_en, data.description_ar]
     );
 
-    revalidateTag("skills");
-
+    revalidateTag("skills", "max");
     return {
       data: result.rows[0],
       message: "Skill has been added successfully",
       status: 201,
     };
-
   } catch (error) {
     console.log("SQL Error:", error);
 
@@ -32,22 +30,22 @@ export const addSkill = async (data: NewSkill) => {
   }
 };
 
-
 export const getAllSkills = unstable_cache(
   async () => {
     try {
-      const result = await pool.query<NewSkill>(
-        "SELECT * FROM skills "
-      );
+      const result = await pool.query<NewSkill>("SELECT * FROM skills ");
       return { data: result.rows, message: "All Skills", status: 200 };
     } catch (error) {
-      return { data: error, message: "Error in getting all skills", status: 500 };
+      return {
+        data: error,
+        message: "Error in getting all skills",
+        status: 500,
+      };
     }
   },
   ["all-skills"],
   { tags: ["skills"], revalidate: 3600 }
 );
-
 
 export const getSkillById = async (id: string) => {
   try {
@@ -64,14 +62,13 @@ export const getSkillById = async (id: string) => {
   }
 };
 
-
 export const deleteSkillById = async (id: string) => {
   try {
-    const result = await pool.query("DELETE FROM skills WHERE id=$1 RETURNING *", [
-      id,
-    ]);
-    revalidateTag("skills");
-
+    const result = await pool.query(
+      "DELETE FROM skills WHERE id=$1 RETURNING *",
+      [id]
+    );
+    revalidateTag("skills", "max");
     if (!result.rows.length) {
       return { data: null, message: "Skill not found", status: 404 };
     }
@@ -91,7 +88,9 @@ export const editSkill = async (
   modifiedSkill: Partial<NewSkill>
 ) => {
   try {
-    const isValidId = await pool.query("SELECT * FROM skills WHERE id=$1", [id]);
+    const isValidId = await pool.query("SELECT * FROM skills WHERE id=$1", [
+      id,
+    ]);
     if (!isValidId.rows.length) {
       return { data: null, message: "Skill not found", status: 404 };
     }
@@ -114,12 +113,31 @@ export const editSkill = async (
       ]
     );
 
-    revalidateTag("skills");
-
-    return { data: result.rows[0], message: "Skill updated successfully", status: 200 };
-
+    revalidateTag("skills", "max");
+    return {
+      data: result.rows[0],
+      message: "Skill updated successfully",
+      status: 200,
+    };
   } catch (error) {
-
     return { data: null, message: "Error in editing skill", status: 500 };
   }
+};
+
+export const getSkillsbyLocale = async (locale: Locale) => {
+  const result = await getAllSkills();
+
+  if (!result || !result.data) return null;
+
+  const localizedSkills = result.data.map((skill: SkillTranslated) => ({
+ 
+    name: locale === "ar" ? skill.name_ar : skill.name_en,
+    description: locale === "ar" ? skill.description_ar : skill.description_en,
+  }));
+
+  return {
+    data: localizedSkills,
+    message: result.message,
+    status: result.status,
+  };
 };

@@ -30,6 +30,7 @@ const items = [
   { title: "Emails", url: "/admin/dashboard/emails", icon:Mail  },
   { title: "Experiences", url: "/admin/dashboard/experience", icon:Briefcase  },
   { title: "Skills", url: "/admin/dashboard/skills", icon:CirclePlus  },
+  { title: "Education", url: "/admin/dashboard/education", icon:CirclePlus  },
 ];
 
 export function AppSidebar() {

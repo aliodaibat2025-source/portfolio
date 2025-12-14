@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import { getSettingbyId } from "@/app/models/db/lib/services/settings";
-import { editSetting } from "../(fetch)/editSetting";
+import { editSettingAction } from "../(fetch)/editSetting";
 import EditSettingForm from "@/components/settings/editSettingForm";
 
 async function Page(prop: { params: Promise<{ id: string }> }) {
@@ -12,7 +12,7 @@ async function Page(prop: { params: Promise<{ id: string }> }) {
     
 
       <main>
-        <EditSettingForm setting={setting[0]} action={editSetting} />
+        <EditSettingForm setting={setting[0]} action={editSettingAction} />
       </main>
   );
 }

@@ -405,7 +405,7 @@ export type NewEmail = {
   phone_nmuber?: string;
   subject: string;
   description: string;
- sent_at?: Date;
+  sent_at?: Date;
 };
 
 export type NewExperience = {
@@ -418,15 +418,52 @@ export type NewExperience = {
   end_date: Date | null;
   location_en: string;
   location_ar: string;
-  current_job:boolean
+  current_job: boolean;
+};
+export type ExperienceTranslated = {
+  id?: string;
+  positions_en: string;
+  positions_ar: string;
+  description_en: string;
+  description_ar: string;
+  positions: string;
+  description: string;
+  start_date: Date;
+  end_date: Date | null;
+  location_en: string;
+  location_ar: string;
+  location: string;
+  current_job: boolean;
 };
 
 export type NewSkill = {
   id?: string;
   name_en: string;
   name_ar: string;
+
   description_en: string;
   description_ar: string;
+};
+export type SkillTranslated = {
+  id?: string;
+  name: string;
+  name_ar: string;
+  name_en: string;
 
+  description_en: string;
+
+  description: string;
+  description_ar: string;
 };
 
+export type NewEducation = {
+  id?: string;
+  title_en: string;
+  title_ar: string;
+  description_en: string;
+  description_ar: string;
+  start_date: Date;
+  end_date: Date | null;
+  location_en: string;
+  location_ar: string;
+};
