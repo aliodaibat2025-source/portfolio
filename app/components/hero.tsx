@@ -1,48 +1,39 @@
-'use client'
+"use client";
 
 import React, { useEffect } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 
-type dataType={
-  value:string|undefined,
-  name:string|undefined
-} 
+type dataType = {
+  value: string | undefined;
+  name: string | undefined;
+};
 
 interface Props {
-  position: dataType |null
-  bioInHeader:dataType|null
-
+  position: dataType | null;
+  bioInHeader: dataType | null;
+  imageInHero: dataType | null;
 }
-export default function Hero({position,bioInHeader}:Props) {
-
+export default function Hero({ position, bioInHeader, imageInHero }: Props) {
   useEffect(() => {
-    
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" }  ,  delay: .2 });
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" }, delay: 0.2 });
 
-    tl.fromTo(
-      ".overlay",
-      { opacity: 0 },
-      { opacity: 1, duration: 1 }
-      
-    );
+    tl.fromTo(".overlay", { opacity: 0 }, { opacity: 1, duration: 1 });
 
-  
     tl.fromTo(
       ".hero-image",
       { x: 200, opacity: 0 },
       { x: 0, opacity: 1, duration: 1 },
-      "-=0.5" 
+      "-=0.5"
     );
 
     tl.fromTo(
       ".hero-text",
       { x: -100, opacity: 0 },
       { x: 0, opacity: 1, duration: 1, stagger: 0.2 },
-      "-=0.5" 
+      "-=0.5"
     );
 
-   
     const mm = gsap.matchMedia();
     mm.add("(max-width: 767px)", () => {
       gsap.to(".hero-border", {
@@ -57,8 +48,8 @@ export default function Hero({position,bioInHeader}:Props) {
         ease: "power1.inOut",
       });
     });
-
   }, []);
+
 
   return (
     <section
@@ -66,14 +57,16 @@ export default function Hero({position,bioInHeader}:Props) {
       className="min-h-screen flex flex-col-reverse md:flex-row items-center justify-center
                  px-4 sm:px-6 md:px-20 pt-28 bg-black relative overflow-hidden"
     >
-
-   
-      <div className="overlay absolute top-0 left-0 w-full h-full 
+      <div
+        className="overlay absolute top-0 left-0 w-full h-full 
                      bg-linear-to-br from-black via-gray-800 to-black 
-                      z-0 pointer-events-none select-none opacity-0"></div>
+                      z-0 pointer-events-none select-none opacity-0"
+      ></div>
 
-      <div className="absolute left-0 bottom-0 w-full h-[30%] bg-linear-to-b
-                      from-transparent to-black z-10"></div>
+      <div
+        className="absolute left-0 bottom-0 w-full h-[30%] bg-linear-to-b
+                      from-transparent to-black z-10"
+      ></div>
 
       <div className="hero-text relative z-20 md:w-1/2 text-left space-y-6 text-white mt-4 md:mt-0">
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold leading-tight">
@@ -115,10 +108,11 @@ export default function Hero({position,bioInHeader}:Props) {
                    border-4 border-white md:border-0
                    p-3 sm:p-4 md:p-0 opacity-0"
       >
-        <Image
-          src="/mann.svg"
+        <img
+          src={imageInHero?.value ?? ""}
           alt="Mohammad"
-          fill
+         
+
           className="object-cover rounded-full md:rounded-none"
         />
 
@@ -128,7 +122,6 @@ export default function Hero({position,bioInHeader}:Props) {
                      hidden md:block"
         ></div>
       </div>
-
     </section>
   );
 }

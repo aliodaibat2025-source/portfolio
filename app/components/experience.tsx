@@ -1,16 +1,14 @@
 // Experience.tsx
 
-import ExperienceHeader from './ExperienceHeader'; 
-import ExperienceBody from './ExperienceBody';    
+import ExperienceHeader from "./ExperienceHeader";
+import ExperienceBody from "./ExperienceBody";
 
-type dataType={
-  value:string|undefined,
-  name:string|undefined
-} 
+type dataType = {
+  value: string | undefined;
+  name: string | undefined;
+};
 
-
-
-export type ExperienceProps  ={
+export type ExperienceProps = {
   experience?: Array<{
     id: string;
     positions: string;
@@ -19,17 +17,17 @@ export type ExperienceProps  ={
     end_date: string;
     location: string;
   }>;
-   textInExperience?:dataType |null
-  
+  textInExperience?: dataType | null;
 };
 
-
-
-const Experience = ({ experience,textInExperience}: ExperienceProps) => {
+const Experience = ({ experience, textInExperience }: ExperienceProps) => {
   return (
-    <section className="min-h-screen bg-linear-to-br from-gray-800 via-black to-gray-800 px-6 py-20">
-      <ExperienceHeader  textInExperience={textInExperience}/>  {/* استدعاء مكون الهيدر */}
-      <ExperienceBody experience={experience}  />  {/* استدعاء مكون الجسم */}
+    <section
+      id="experience"
+      className="min-h-screen bg-linear-to-br from-gray-800 via-black to-gray-800 px-6 py-20"
+    >
+      <ExperienceHeader textInExperience={textInExperience} />
+      <ExperienceBody experience={experience} />
     </section>
   );
 };

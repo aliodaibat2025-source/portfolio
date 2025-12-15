@@ -1,6 +1,6 @@
 "use client";
 
-import  { useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { Calendar, Copy, ArrowLeft } from "lucide-react";
 import { NewEmail } from "@/types";
@@ -100,9 +100,9 @@ export default function EmailDetailsClient({ email }: Props) {
                   Send mail
                 </a>
 
-                {email.phone_nmuber && (
+                {email.phone_number && (
                   <a
-                    href={`tel:${email.phone_nmuber}`}
+                    href={`tel:${email.phone_number}`}
                     className="text-sm text-gray-600 hover:underline"
                   >
                     Call
@@ -135,7 +135,7 @@ export default function EmailDetailsClient({ email }: Props) {
               <div className="flex items-start justify-between">
                 <div>
                   <div className="text-xs text-gray-500">Phone</div>
-                  <div className="text-sm">{email.phone_nmuber ?? "—"}</div>
+                  <div className="text-sm">{email.phone_number ?? "—"}</div>
                 </div>
               </div>
 

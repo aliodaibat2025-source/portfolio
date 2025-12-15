@@ -200,7 +200,10 @@ function EditSettingForm({ setting, action }: prop) {
       
             <Image   src={form.value_en}
             alt="Uploaded image"
+            height={400}
+            width={400}
             className="mt-2 max-h-[200px] object-contain"/>
+            
           )}
         </div>
       );

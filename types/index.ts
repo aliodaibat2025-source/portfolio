@@ -402,7 +402,7 @@ export type NewEmail = {
   first_name: string;
   last_name: string;
   email: string;
-  phone_nmuber?: string;
+  phone_number?: string;
   subject: string;
   description: string;
   sent_at?: Date;

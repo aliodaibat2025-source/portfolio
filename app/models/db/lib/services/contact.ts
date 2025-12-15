@@ -9,7 +9,7 @@ export const newEmail = async (data: NewEmail) => {
         data.first_name,
         data.last_name,
         data.email,
-        data.phone_nmuber,
+        data.phone_number,
         data.subject,
         data.description,
       ]

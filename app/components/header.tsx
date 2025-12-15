@@ -11,7 +11,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const t = useTranslations("nav");
 
-  const sections = ["home","about","skills","experience","education","activities","contact"];
+  const sections = ["home","about","skills","experience","education","contact"];
 
   const handleClick = (id: string) => {
     setOpen(false);

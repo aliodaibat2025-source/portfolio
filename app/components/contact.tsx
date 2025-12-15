@@ -115,7 +115,7 @@ export default function Contact({ emailAction }: Props) {
       first_name: firstName.trim(),
       last_name: lastName.trim(),
       email: email.trim(),
-      phone_nmuber: phone.trim() || undefined,
+      phone_number: phone.trim() || undefined,
       subject: subject.trim() || "Website Contact" ,
       description: message.trim(),
       sent_at: new Date(),
@@ -137,7 +137,7 @@ export default function Contact({ emailAction }: Props) {
   return (
     <section
       id="contact"
-      className="min-h-screen flex flex-col items-center justify-center  bg-linear-to-bl from-gray-800 via-black to-gray-800  px-6 py-20"
+      className="min-h-screen flex flex-col items-center justify-center  bg-linear-to-br from-gray-800 via-black to-gray-800  px-6 py-20"
     >
       <h2 className="contact-heading text-4xl font-bold mb-8 text-white text-center">
         Contact
@@ -177,7 +177,7 @@ export default function Contact({ emailAction }: Props) {
         className="contact-form w-full max-w-xl bg-gray-900 p-8 rounded-xl shadow-xl flex flex-col gap-4 border border-gray-700"
       >
         {/* First + Last name inline */}
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-col lg:flex-row">
           <input
             type="text"
             placeholder="First name"
