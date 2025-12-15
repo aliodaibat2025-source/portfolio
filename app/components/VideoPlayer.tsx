@@ -20,37 +20,38 @@ export default function VideoPlayer({ src, title, className }: VideoPlayerProps)
   const [progress, setProgress] = useState(0);
 
   const togglePlay = useCallback(() => {
-    if (videoRef.current) {
-      const video = videoRef.current;
-      if (video.paused) {
-        video.play().catch(() => console.log("Autoplay blocked"));
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      video.play().then(() => {
         setIsPlaying(true);
-      } else {
-        video.pause();
-        setIsPlaying(false);
-      }
+      }).catch(() => {
+        console.log("Autoplay blocked");
+      });
+    } else {
+      video.pause();
+      setIsPlaying(false);
     }
   }, []);
 
   const toggleMute = useCallback(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(videoRef.current.muted);
-    }
-  }, []);
-
-  const updateProgress = useCallback(() => {
-    if (videoRef.current) {
-      const video = videoRef.current;
-      setProgress((video.currentTime / video.duration) * 100);
-    }
-  }, []);
-
-  useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    // Video Animations on Scroll
+    video.muted = !video.muted;
+    setIsMuted(video.muted);
+  }, []);
+
+  const updateProgress = useCallback(() => {
+    const video = videoRef.current;
+    if (!video || !video.duration) return;
+
+    setProgress((video.currentTime / video.duration) * 100);
+  }, []);
+
+  useEffect(() => {
+    // Animations
     gsap.fromTo(
       ".video-title",
       { y: 50, opacity: 0 },
@@ -79,12 +80,7 @@ export default function VideoPlayer({ src, title, className }: VideoPlayerProps)
         },
       }
     );
-
-    const interval = setInterval(updateProgress, 200);
-    return () => {
-      clearInterval(interval);
-    };
-  }, [updateProgress]);
+  }, []);
 
   return (
     <div className={`video-container relative w-full ${className || ""} group`}>
@@ -95,25 +91,40 @@ export default function VideoPlayer({ src, title, className }: VideoPlayerProps)
       )}
 
       <div className="video-player-container relative w-full h-[26rem] md:h-[32rem] rounded-xl overflow-hidden shadow-2xl border border-gray-700">
+        
+        {/* VIDEO */}
         <video
           ref={videoRef}
           src={src}
           loop
           playsInline
           muted={isMuted}
+          preload="metadata"
+          onClick={togglePlay}
           onTimeUpdate={updateProgress}
-          className="w-full h-full object-cover rounded-xl"
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          className="w-full h-full object-cover rounded-xl cursor-pointer"
         />
 
-        <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <button onClick={togglePlay} className="bg-black/60 text-white p-3 rounded-full hover:bg-black/80">
+        {/* CONTROLS */}
+        <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none md:pointer-events-auto">
+          <button
+            onClick={togglePlay}
+            className="bg-black/60 text-white p-3 rounded-full hover:bg-black/80 pointer-events-auto"
+          >
             {isPlaying ? <FaPause size={18} /> : <FaPlay size={18} />}
           </button>
-          <button onClick={toggleMute} className="bg-black/60 text-white p-3 rounded-full hover:bg-black/80">
+
+          <button
+            onClick={toggleMute}
+            className="bg-black/60 text-white p-3 rounded-full hover:bg-black/80 pointer-events-auto"
+          >
             {isMuted ? <FaVolumeMute size={18} /> : <FaVolumeUp size={18} />}
           </button>
         </div>
 
+        {/* PROGRESS BAR */}
         <div className="absolute bottom-0 left-0 w-full h-1 bg-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div
             className="h-full bg-yellow-400 transition-all duration-200"
