@@ -24,11 +24,7 @@ export default function VideoPlayer({ src, title, className }: VideoPlayerProps)
     if (!video) return;
 
     if (video.paused) {
-      video.play().then(() => {
-        setIsPlaying(true);
-      }).catch(() => {
-        console.log("Autoplay blocked");
-      });
+      video.play().then(() => setIsPlaying(true)).catch(() => {});
     } else {
       video.pause();
       setIsPlaying(false);
@@ -51,22 +47,6 @@ export default function VideoPlayer({ src, title, className }: VideoPlayerProps)
   }, []);
 
   useEffect(() => {
-    // Animations
-    gsap.fromTo(
-      ".video-title",
-      { y: 50, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".video-title",
-          start: "top 80%",
-        },
-      }
-    );
-
     gsap.fromTo(
       ".video-player-container",
       { opacity: 0 },
@@ -76,21 +56,15 @@ export default function VideoPlayer({ src, title, className }: VideoPlayerProps)
         ease: "power3.out",
         scrollTrigger: {
           trigger: ".video-player-container",
-          start: "top 80%",
+          start: "top 85%",
         },
       }
     );
   }, []);
 
   return (
-    <div className={`video-container relative w-full ${className || ""} group`}>
-      {title && (
-        <h3 className="video-title text-2xl md:text-3xl font-semibold text-white text-center mb-4 px-2 md:px-0">
-          {title}
-        </h3>
-      )}
-
-      <div className="video-player-container relative w-full h-[26rem] md:h-[32rem] rounded-xl overflow-hidden shadow-2xl border border-gray-700">
+    <div className={`video-container w-full ${className || ""}`}>
+      <div className="video-player-container w-full rounded-xl overflow-hidden shadow-2xl border border-gray-700 bg-black">
         
         {/* VIDEO */}
         <video
@@ -104,28 +78,51 @@ export default function VideoPlayer({ src, title, className }: VideoPlayerProps)
           onTimeUpdate={updateProgress}
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
-          className="w-full h-full object-cover rounded-xl cursor-pointer"
+          className="
+            w-full
+            h-[220px] sm:h-[260px] md:h-[32rem]
+            object-contain
+            bg-black
+            cursor-pointer
+          "
         />
 
-        {/* CONTROLS */}
-        <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none md:pointer-events-auto">
+        {/* CONTROLS - MOBILE */}
+        <div className="flex md:hidden items-center justify-between px-4 py-3 bg-black">
           <button
             onClick={togglePlay}
-            className="bg-black/60 text-white p-3 rounded-full hover:bg-black/80 pointer-events-auto"
+            className="bg-white/10 text-white p-3 rounded-full"
           >
             {isPlaying ? <FaPause size={18} /> : <FaPlay size={18} />}
           </button>
 
           <button
             onClick={toggleMute}
-            className="bg-black/60 text-white p-3 rounded-full hover:bg-black/80 pointer-events-auto"
+            className="bg-white/10 text-white p-3 rounded-full"
+          >
+            {isMuted ? <FaVolumeMute size={18} /> : <FaVolumeUp size={18} />}
+          </button>
+        </div>
+
+        {/* CONTROLS - DESKTOP */}
+        <div className="hidden md:flex absolute bottom-4 left-4 right-4 justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <button
+            onClick={togglePlay}
+            className="bg-black/60 text-white p-3 rounded-full hover:bg-black/80"
+          >
+            {isPlaying ? <FaPause size={18} /> : <FaPlay size={18} />}
+          </button>
+
+          <button
+            onClick={toggleMute}
+            className="bg-black/60 text-white p-3 rounded-full hover:bg-black/80"
           >
             {isMuted ? <FaVolumeMute size={18} /> : <FaVolumeUp size={18} />}
           </button>
         </div>
 
         {/* PROGRESS BAR */}
-        <div className="absolute bottom-0 left-0 w-full h-1 bg-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="w-full h-1 bg-white/30">
           <div
             className="h-full bg-yellow-400 transition-all duration-200"
             style={{ width: `${progress}%` }}

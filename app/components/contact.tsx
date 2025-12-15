@@ -144,7 +144,7 @@ export default function Contact({ emailAction,textContactSection }: Props) {
   return (
     <section
       id="contact"
-      className="min-h-screen flex flex-col items-center justify-center  bg-linear-to-br from-gray-800 via-black to-gray-800  px-6 py-20"
+      className=" h-fit flex flex-col items-center justify-center  bg-linear-to-br from-gray-800 via-black to-gray-800  px-6 py-20"
     >
       <h2 className="contact-heading text-4xl font-bold mb-8 text-white text-center">
         {t("contact.heading")}

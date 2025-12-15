@@ -52,7 +52,7 @@ export default function About({textInAbout,imageInAbout,video}:Props) {
   return (
     <section
       id="about"
-      className="w-full flex flex-col items-center justify-center bg-linear-to-br from-black via-black to-gray-800 px-6 py-20"
+      className="w-full  flex flex-col items-center justify-center bg-linear-to-br from-black via-black to-gray-800 px-6 py-20"
     >
       <div className="max-w-7xl w-full flex flex-col gap-16">
 
