@@ -18,6 +18,8 @@ export default function EmailDetailsClient({ email }: Props) {
   const router = useRouter();
   const [copied, setCopied] = useState(false);
 
+  console.log("email: ",email);
+  
   const formatJordanTime = (iso?: string | null) => {
     if (!iso) return "—";
     try {

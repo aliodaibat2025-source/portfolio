@@ -1,5 +1,6 @@
-"use client";
+'use client';
 
+import { useTranslations } from "next-intl";
 import React, { useEffect, useState, useTransition } from "react";
 import { FaEnvelope, FaPhone, FaLinkedin } from "react-icons/fa";
 import gsap from "gsap";
@@ -15,6 +16,8 @@ interface Props {
 }
 
 export default function Contact({ emailAction }: Props) {
+
+  const t = useTranslations(); // استخدام الترجمة العامة
   const [isPending, startTransition] = useTransition();
 
   // form state - split first / last name
@@ -107,7 +110,7 @@ export default function Contact({ emailAction }: Props) {
     e.preventDefault();
 
     if (!firstName.trim() || !email.trim() || !message.trim() || !subject.trim()) {
-      toast.error("Please fill First name, Email, Subject and Message fields.");
+      toast.error(t("contact.error_fill_fields")); // استخدم الترجمة هنا
       return;
     }
 
@@ -116,7 +119,7 @@ export default function Contact({ emailAction }: Props) {
       last_name: lastName.trim(),
       email: email.trim(),
       phone_number: phone.trim() || undefined,
-      subject: subject.trim() || "Website Contact" ,
+      subject: subject.trim() || "Website Contact",
       description: message.trim(),
       sent_at: new Date(),
     };
@@ -124,10 +127,10 @@ export default function Contact({ emailAction }: Props) {
     startTransition(async () => {
       try {
         await emailAction(payload);
-        toast.success("Message sent successfully!");
+        toast.success(t("contact.message_sent_success")); // استخدم الترجمة هنا
         resetForm();
       } catch (err) {
-        let msg = "Something went wrong while sending message.";
+        let msg = t("contact.something_went_wrong"); // استخدم الترجمة هنا
         if (err instanceof Error) msg = err.message;
         toast.error(msg);
       }
@@ -140,12 +143,11 @@ export default function Contact({ emailAction }: Props) {
       className="min-h-screen flex flex-col items-center justify-center  bg-linear-to-br from-gray-800 via-black to-gray-800  px-6 py-20"
     >
       <h2 className="contact-heading text-4xl font-bold mb-8 text-white text-center">
-        Contact
+        {t("contact.heading")}
       </h2>
 
       <p className="contact-text text-gray-300 text-center text-lg max-w-2xl mb-12">
-        Feel free to reach out to me for collaborations, interviews, or general
-        inquiries.
+        {t("contact.contact")} {/* الترجمة للنصوص العامة */}
       </p>
 
       <div className="contact-info flex flex-col md:flex-row gap-8 mb-12 text-white">
@@ -180,7 +182,7 @@ export default function Contact({ emailAction }: Props) {
         <div className="flex gap-3 flex-col lg:flex-row">
           <input
             type="text"
-            placeholder="First name"
+            placeholder={t("contact.first_name")} // الترجمة للـ placeholder
             className="flex-1 border border-gray-700 rounded-lg p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
@@ -188,7 +190,7 @@ export default function Contact({ emailAction }: Props) {
           />
           <input
             type="text"
-            placeholder="Last name"
+            placeholder={t("contact.last_name")} // الترجمة للـ placeholder
             className="flex-1 border border-gray-700 rounded-lg p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
@@ -198,7 +200,7 @@ export default function Contact({ emailAction }: Props) {
 
         <input
           type="email"
-          placeholder="Your Email"
+          placeholder={t("contact.email")} // الترجمة للـ placeholder
           className="border border-gray-700 rounded-lg p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -206,7 +208,7 @@ export default function Contact({ emailAction }: Props) {
         />
         <input
           type="text"
-          placeholder="Phone (optional)"
+          placeholder={t("contact.phone")} // الترجمة للـ placeholder
           className="border border-gray-700 rounded-lg p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
@@ -214,14 +216,14 @@ export default function Contact({ emailAction }: Props) {
         />
         <input
           type="text"
-          placeholder="Subject"
+          placeholder={t("contact.subject")} // الترجمة للـ placeholder
           className="border border-gray-700 rounded-lg p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
           disabled={isPending}
         />
         <textarea
-          placeholder="Your Message"
+          placeholder={t("contact.message")} // الترجمة للـ placeholder
           rows={5}
           className="border border-gray-700 rounded-lg p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
           value={message}

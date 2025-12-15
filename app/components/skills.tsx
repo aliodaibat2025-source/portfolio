@@ -5,6 +5,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import type { SkillTranslated } from "@/types";
 
+import { useTranslations } from "next-intl";
+
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,6 +24,10 @@ type SkillsProps = {
 };
 
 export default function Skills({ skills,textInSkills }: SkillsProps) {
+
+  const t = useTranslations("settings");
+
+
   useEffect(() => {
     gsap.fromTo(
       ".skills-heading",
@@ -76,7 +83,7 @@ export default function Skills({ skills,textInSkills }: SkillsProps) {
       className="min-h-screen flex flex-col items-center justify-center bg-linear-to-bl from-gray-800 via-black to-gray-800 px-6 py-20"
     >
       <h2 className="skills-heading text-4xl font-bold mb-8 text-white text-center">
-        Skills
+           {t("skills")}
       </h2>
 
       <p className="skills-text text-gray-300 text-center text-lg max-w-2xl mb-12">
@@ -96,3 +103,10 @@ export default function Skills({ skills,textInSkills }: SkillsProps) {
     </section>
   );
 }
+
+
+
+
+
+
+

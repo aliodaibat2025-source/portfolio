@@ -5,7 +5,30 @@
     "skills": "Skills",
     "experience": "Experience",
     "education": "Education",
-   
     "contact": "Contact"
+  },
+  "settings": {
+    "aboutme": "About Me",
+    "watchmyworkinaction": "Watch My Work in Action",
+    "skills": "Skills",
+    "experience": "Experience",
+    "education&certifications": "Education & Certifications",
+    "contact": "Contact",
+    "myexperience": "My Experience",
+    "contactme": "Contact Me",
+    "rights":"All Rights Reserved."
+  },
+  "contact": {
+    "heading": "Contact",
+    "first_name": "First name",
+    "last_name": "Last name",
+    "email": "Your Email",
+    "phone": "Phone (optional)",
+    "subject": "Subject",
+    "message": "Your Message",
+    "contact": "Feel free to reach out to me for collaborations, interviews, or general inquiries.",
+    "error_fill_fields": "Please fill First name, Email, Subject and Message fields.",
+    "message_sent_success": "Message sent successfully!",
+    "something_went_wrong": "Something went wrong while sending message."
   }
 }

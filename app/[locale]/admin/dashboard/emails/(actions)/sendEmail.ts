@@ -53,7 +53,7 @@ export const sendEmailAction= async (data:NewEmail)=>{
             <span class="label" id="sender">Sender</span>
             <div class="value">
               <div><strong>${data.first_name + data.last_name || "Guest"}</strong></div>
-              <div style="margin-top:6px;"><a href="mailto:${data.email}" style="color:#0f172a; text-decoration:underline;">${data.email}</a>${data.phone_nmuber ? ` • ${data.phone_nmuber}` : ""}</div>
+              <div style="margin-top:6px;"><a href="mailto:${data.email}" style="color:#0f172a; text-decoration:underline;">${data.email}</a>${data.phone_number ? ` • ${data.phone_number}` : ""}</div>
             </div>
           </div>
 
@@ -66,7 +66,7 @@ export const sendEmailAction= async (data:NewEmail)=>{
             <span class="label" id="quick-actions">Quick actions</span>
             <div style="display:flex; gap:10px; flex-wrap:wrap;">
               <a class="button" href="mailto:${data.email}?subject=Re: ${encodeURIComponent(data.subject)}">Reply to sender</a>
-              <a class="button" href="mailto:${process.env.EMAIL_ADMIN || ""}?subject=Follow-up%20required%20—%20${encodeURIComponent(data.subject)}" style="background:#0b74de">Notify team</a>
+              
             </div>
           </div>
         </div>

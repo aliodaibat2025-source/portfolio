@@ -4,6 +4,8 @@ import { deleteEmailAction } from "./(actions)/deleteEmail";
 import { getAllEmails } from "@/app/models/db/lib/services/contact";
 export default async function UsersTable() {
   const emails = (await getAllEmails()).data ;
+  console.log("emails: ",emails);
+  
   return (
     <main className="flex flex-col justify-center items-center ml-7 w-[88vw] md:w-[60vw] xl:w-[80vw]">
       {/* Header */}

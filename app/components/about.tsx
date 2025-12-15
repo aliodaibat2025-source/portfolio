@@ -6,6 +6,8 @@ import { ScrollTrigger } from "gsap/all";
 import Image from "next/image";
 import VideoPlayer from "./VideoPlayer";
 
+import { useTranslations } from "next-intl";
+
 type dataType={
   value:string|undefined,
   name:string|undefined
@@ -18,7 +20,16 @@ interface Props {
 }
 gsap.registerPlugin(ScrollTrigger);
 
+
+
+ 
+
+
+
+
+
 export default function About({textInAbout,imageInAbout,video}:Props) {
+   const t = useTranslations("settings");
   useEffect(() => {
     // Animations
     gsap.fromTo(
@@ -46,7 +57,6 @@ export default function About({textInAbout,imageInAbout,video}:Props) {
       <div className="max-w-7xl w-full flex flex-col gap-16">
 
         <div className="flex flex-col md:flex-row items-start md:items-center gap-12 w-full flex-wrap">
-          {/* الصورة */}
           <div className="about-media relative w-full md:w-1/2 h-64 sm:h-80 md:h-96 rounded-xl overflow-hidden shadow-2xl border border-gray-700 shrink-0">
             <Image
               src={imageInAbout?.value??""}
@@ -57,17 +67,15 @@ export default function About({textInAbout,imageInAbout,video}:Props) {
             />
           </div>
 
-          {/* النص */}
           <div className="md:w-1/2 flex flex-col gap-4 text-white flex-1 min-w-[250px]">
-            <h2 className="about-heading text-4xl font-bold">About Me</h2>
+            <h2 className="about-heading text-4xl font-bold">   {t("aboutme")}</h2>
             <p className="about-text text-lg leading-relaxed mb-6 text-gray-100 wrap-break-word text-justify">
            {textInAbout?.value}
           </p>
           </div>
         </div>
 
-        {/* ===== سطر 2: الفيديو ===== */}
-        <VideoPlayer src={video?.value??""} title="Watch My Work in Action" />
+        <VideoPlayer src={video?.value??""} title= {t("watchmyworkinaction")} />
 
       </div>
     </section>

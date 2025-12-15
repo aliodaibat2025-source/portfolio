@@ -34,7 +34,7 @@ interface Option {
   placeholder?: string;
 }
 
-const defaultOptions: Option[] = [
+ const defaultOptions: Option[] = [
     {
       value: "position_in_header",
       label: "Position In Header",
@@ -65,13 +65,17 @@ const defaultOptions: Option[] = [
       label: "Text In Experience Section",
       type: "textarea",
     },
+     {
+      value: "text_contact_section",
+      label: "Text In Contact Section",
+      type: "textarea",
+    },
     {
       value: "text_education_section",
       label: "Text In Education Section",
       type: "textarea",
     },
   ];
-
 function EditSettingForm({ setting, action }: prop) {
   const router = useRouter();
   const [form, setForm] = useState<newSetting>({
@@ -305,7 +309,7 @@ function EditSettingForm({ setting, action }: prop) {
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 bg-[#0f4473] text-white rounded hover:bg-[#236dae] cursor-pointer"
+                className="px-4 py-2 bg-black text-white  rounded-md  hover:text-gray-200 cursor-pointer"
                 disabled={isPending || isUploading}
               >
                 {isPending ? "Updating..." : isUploading ? "Uploading..." : "Save Changes"}

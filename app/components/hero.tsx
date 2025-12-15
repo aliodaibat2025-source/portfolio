@@ -4,6 +4,12 @@ import React, { useEffect } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 
+import { useTranslations } from "next-intl";
+
+
+
+
+
 type dataType = {
   value: string | undefined;
   name: string | undefined;
@@ -14,7 +20,16 @@ interface Props {
   bioInHeader: dataType | null;
   imageInHero: dataType | null;
 }
+
 export default function Hero({ position, bioInHeader, imageInHero }: Props) {
+
+  
+ const t = useTranslations("settings");
+
+
+
+
+
   useEffect(() => {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" }, delay: 0.2 });
 
@@ -37,11 +52,9 @@ export default function Hero({ position, bioInHeader, imageInHero }: Props) {
     const mm = gsap.matchMedia();
     mm.add("(max-width: 767px)", () => {
       gsap.to(".hero-border", {
-        boxShadow: `
-          0 0 4px rgba(255,255,255,0.5),
-          0 0 10px rgba(255,255,255,0.7),
-          0 0 18px rgba(255,255,255,1)
-        `,
+        boxShadow: `0 0 4px rgba(255,255,255,0.5),
+                    0 0 10px rgba(255,255,255,0.7),
+                    0 0 18px rgba(255,255,255,1)`,
         repeat: -1,
         yoyo: true,
         duration: 1.8,
@@ -49,7 +62,6 @@ export default function Hero({ position, bioInHeader, imageInHero }: Props) {
       });
     });
   }, []);
-
 
   return (
     <section
@@ -68,7 +80,7 @@ export default function Hero({ position, bioInHeader, imageInHero }: Props) {
                       from-transparent to-black z-10"
       ></div>
 
-      <div className="hero-text relative z-20 md:w-1/2 text-left space-y-6 text-white mt-4 md:mt-0">
+      <div className="hero-text relative z-20 md:w-1/2 space-y-6 text-white mt-4 md:mt-0 text-start">
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold leading-tight">
           Mohammad
         </h1>
@@ -83,11 +95,12 @@ export default function Hero({ position, bioInHeader, imageInHero }: Props) {
 
         <div className="flex flex-col sm:flex-row gap-4 mt-4">
           <a
-            href="#projects"
+            href="#experience"
             className="px-6 py-3 bg-white text-black rounded-lg text-lg sm:text-xl font-medium 
                        hover:bg-gray-200 transition transform hover:-translate-y-1"
           >
-            View My Work
+          {t("myexperience")}
+     
           </a>
 
           <a
@@ -95,7 +108,7 @@ export default function Hero({ position, bioInHeader, imageInHero }: Props) {
             className="px-6 py-3 border border-gray-400 text-gray-300 rounded-lg text-lg sm:text-xl font-medium 
                        hover:bg-gray-800 transition transform hover:-translate-y-1"
           >
-            Contact Me
+         {t("contactme")}
           </a>
         </div>
       </div>
@@ -111,8 +124,6 @@ export default function Hero({ position, bioInHeader, imageInHero }: Props) {
         <img
           src={imageInHero?.value ?? ""}
           alt="Mohammad"
-         
-
           className="object-cover rounded-full md:rounded-none"
         />
 

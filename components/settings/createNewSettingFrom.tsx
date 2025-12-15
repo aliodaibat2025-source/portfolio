@@ -86,6 +86,11 @@ export default function CreateNewSetting({
       label: "Text In Experience Section",
       type: "textarea",
     },
+     {
+      value: "text_contact_section",
+      label: "Text In Contact Section",
+      type: "textarea",
+    },
     {
       value: "text_education_section",
       label: "Text In Education Section",
@@ -488,7 +493,7 @@ export default function CreateNewSetting({
 
                 <button
                   type="submit"
-                  className="bg-black text-white px-4 py-2 rounded-md cursor-pointer hover:text-gray-700"
+                  className="bg-black text-white px-4 py-2 rounded-md cursor-pointer hover:text-gray-200 "
                   disabled={
                     isSubmitting || isPending || isUploadingEn || isUploadingAr
                   }

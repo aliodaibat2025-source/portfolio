@@ -50,13 +50,20 @@ export const emailsColumns: ColumnDef<NewEmail>[] = [
     cell: ({ row }) => <div>{row.getValue("subject") ?? "-"}</div>,
     enableSorting: false,
   },
-  {
-    accessorKey: "sent_at",
-    header: "Sent At",
-    cell: ({ row }) => {
-      const sentAt = row.getValue("sent_at") as Date | string;
-      return <div>{sentAt instanceof Date ? sentAt.toLocaleString() : sentAt}</div>;
-    },
-    enableSorting: false,
+ {
+  accessorKey: "sent_at",
+  header: "Sent At",
+  cell: ({ row }) => {
+    const sentAt = row.getValue("sent_at") as Date | string | null;
+
+    if (!sentAt) return <div>-</div>;
+
+    const date = sentAt instanceof Date ? sentAt : new Date(sentAt);
+    const jordanDate = new Date(date.getTime() + 3 * 60 * 60 * 1000);
+
+    return <div>{jordanDate.toLocaleString()}</div>;
   },
+  enableSorting: false,
+}
+
 ];

@@ -1,8 +1,18 @@
 "use client";
 
+
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 
+import { useTranslations } from "next-intl";
+
+
+
 export default function Footer() {
+
+
+ const t = useTranslations("settings");
+
+
   return (
     <footer className="w-full bg-black backdrop-blur-lg shadow-md py-8">
       <div className="max-w-6xl mx-auto px-6 flex flex-col items-center gap-4 text-gray-700">
@@ -42,7 +52,7 @@ export default function Footer() {
         <hr className="w-full border-t border-gray-300 my-4" />
 
        
-        <p className="text-sm text-white">&copy; {new Date().getFullYear()} All Rights Reserved.</p>
+        <p className="text-sm text-white">&copy; {new Date().getFullYear()}    {t("rights")}</p>
       </div>
     </footer>
   );

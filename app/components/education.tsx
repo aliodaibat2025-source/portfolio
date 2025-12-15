@@ -1,5 +1,11 @@
 'use client'
 
+
+import { useTranslations } from "next-intl";
+
+
+
+
 import React, { useEffect } from "react";
 import { FaGraduationCap, FaCertificate } from "react-icons/fa";
 import gsap from "gsap";
@@ -17,6 +23,9 @@ interface Props {
   
 }
 export default function Education({textInEducation}:Props) {
+
+ const t = useTranslations("settings");
+
 
   useEffect(() => {
     gsap.fromTo(
@@ -65,7 +74,8 @@ export default function Education({textInEducation}:Props) {
       className="min-h-screen flex flex-col items-center justify-center  bg-linear-to-bl from-gray-800 via-black to-gray-800  px-6 py-20"
     >
       <h2 className="education-heading text-4xl font-bold mb-8 text-white text-center">
-        Education & Certifications
+             {t("education&certifications")}
+
       </h2>
 
       <p className="education-text text-gray-300 text-center text-lg max-w-2xl mb-12">

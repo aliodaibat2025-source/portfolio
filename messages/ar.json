@@ -5,7 +5,34 @@
     "skills": "المهارات",
     "experience": "الخبرات",
     "education": "التعليم",
-  
+
     "contact": "تواصل"
+  },
+
+  "settings": {
+    "aboutme": "عني",
+    "watchmyworkinaction": "نص",
+    "skills": "مهاراتي",
+    "experience": "خبراتي",
+    "education&certifications": "شهاداتي و تعليمي",
+    "contact": "تواصل معي",
+    "myexperience":"خبراتي",
+"contactme":"تواصل معي",
+    "rights":"جميع الحقوق محفوظة."
+  },
+  "contact": {
+    "heading": "اتصل بنا",
+    "first_name": "الاسم الأول",
+    "last_name": "الاسم الأخير",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف (اختياري)",
+    "subject": "الموضوع",
+    "message": "رسالتك",
+    "contact": "لا تتردد في التواصل معي للتعاون أو إجراء المقابلات أو الاستفسارات العامة.",
+    "error_fill_fields": "يرجى ملء الحقول: الاسم الأول، البريد الإلكتروني، الموضوع والرسالة.",
+    "message_sent_success": "تم إرسال الرسالة بنجاح!",
+    "something_went_wrong": "حدث خطأ أثناء إرسال الرسالة."
   }
 }
+
+
