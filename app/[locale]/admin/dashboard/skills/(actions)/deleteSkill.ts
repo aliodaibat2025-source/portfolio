@@ -18,6 +18,6 @@ export async function deleteSkillAction(skillId:string) {
 
   if (result.status!== 200) throw new Error("Failed to delete Skill");
 
-  revalidatePath(`/dashboard/skills`);
+  revalidatePath(`/admin/dashboard/skills`);
   
 }

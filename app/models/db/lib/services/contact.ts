@@ -14,9 +14,9 @@ export const newEmail = async (data: NewEmail) => {
         data.description,
       ]
     );
-    return { data: result, message: "Email Sent Successfully", status: 201 };
+    return { data: null, message: "Email Sent Successfully", status: 201 };
   } catch (error) {
-    return { data: error, message: "Error In Sending The Email", status: 500 };
+    return { data: null, message: "Error In Sending The Email", status: 500 };
   }
 };
 

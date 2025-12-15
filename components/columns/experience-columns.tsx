@@ -6,9 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowUpDown } from "lucide-react";
 
 export const experienceColumns: ColumnDef<NewExperience>[] = [
-  // ------------------------------
-  // SELECT CHECKBOX
-  // ------------------------------
+
   {
     id: "select",
     header: ({ table }) => (
@@ -28,9 +26,7 @@ export const experienceColumns: ColumnDef<NewExperience>[] = [
     enableSorting: false,
   },
 
-  // ------------------------------
-  // POSITIONS EN
-  // ------------------------------
+
   {
     accessorKey: "positions_en",
     header: ({ column }) => (
@@ -55,9 +51,6 @@ export const experienceColumns: ColumnDef<NewExperience>[] = [
     enableSorting: true,
   },
 
-  // ------------------------------
-  // POSITIONS AR
-  // ------------------------------
   {
     accessorKey: "positions_ar",
     header: ({ column }) => (
@@ -78,54 +71,44 @@ export const experienceColumns: ColumnDef<NewExperience>[] = [
     meta: { hiddenByDefault: true },
   },
 
-  // ------------------------------
-  // DESCRIPTION EN
-  // ------------------------------
   {
-    accessorKey: "description_en",
-    header: ({ column }) => (
-      <button
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        className="flex items-center gap-1 cursor-pointer"
-      >
-        Description (EN)
-        <ArrowUpDown className="h-4 w-4" />
-      </button>
-    ),
-   cell: ({ row }) => {
-  const val = row.getValue("description_en") as string;
-  return <div>{val}</div>;
-},
-
-    enableSorting: true,
-  },
-
-  // ------------------------------
-  // DESCRIPTION AR
-  // ------------------------------
-  {
-    accessorKey: "description_ar",
-    header: ({ column }) => (
-      <button
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        className="flex items-center gap-1 cursor-pointer"
-      >
-        Description (AR)
-        <ArrowUpDown className="h-4 w-4" />
-      </button>
-    ),
+  accessorKey: "description_en",
+  header: ({ column }) => (
+    <button
+      onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      className="flex items-center gap-1 cursor-pointer"
+    >
+      Description (EN)
+      <ArrowUpDown className="h-4 w-4" />
+    </button>
+  ),
   cell: ({ row }) => {
-  const val = row.getValue("description_ar") as string;
-  return <div>{val}</div>;
+    const val = row.getValue("description_en") as string;
+    return <div>{val.slice(0, 30)}{val.length > 30 ? "..." : ""}</div>;
+  },
+  enableSorting: true,
 },
 
-    enableSorting: true,
-    meta: { hiddenByDefault: true },
+{
+  accessorKey: "description_ar",
+  header: ({ column }) => (
+    <button
+      onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      className="flex items-center gap-1 cursor-pointer"
+    >
+      Description (AR)
+      <ArrowUpDown className="h-4 w-4" />
+    </button>
+  ),
+  cell: ({ row }) => {
+    const val = row.getValue("description_ar") as string;
+    return <div>{val.slice(0, 30)}{val.length > 30 ? "..." : ""}</div>;
   },
+  enableSorting: true,
+  meta: { hiddenByDefault: true },
+},
 
-  // ------------------------------
-  // LOCATION EN
-  // ------------------------------
+
   {
     accessorKey: "location_en",
     header: ({ column }) => (
@@ -140,9 +123,6 @@ export const experienceColumns: ColumnDef<NewExperience>[] = [
     enableSorting: true,
   },
 
-  // ------------------------------
-  // LOCATION AR
-  // ------------------------------
   {
     accessorKey: "location_ar",
     header: ({ column }) => (
@@ -158,9 +138,6 @@ export const experienceColumns: ColumnDef<NewExperience>[] = [
     meta: { hiddenByDefault: true },
   },
 
-  // ------------------------------
-  // START DATE
-  // ------------------------------
   {
     accessorKey: "start_date",
     header: ({ column }) => (
@@ -180,9 +157,6 @@ export const experienceColumns: ColumnDef<NewExperience>[] = [
     enableSorting: true,
   },
 
-  // ------------------------------
-  // END DATE
-  // ------------------------------
   {
     accessorKey: "end_date",
     header: ({ column }) => (

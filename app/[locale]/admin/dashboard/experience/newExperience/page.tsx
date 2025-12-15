@@ -1,4 +1,3 @@
-import React from "react";
 import { createExperienceAction } from "../(actions)/newExperience";
 import CreateNewExperience from "@/components/experience/CreateNewExperience";
 

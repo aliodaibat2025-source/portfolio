@@ -37,7 +37,7 @@ export const getAllSkills = unstable_cache(
       return { data: result.rows, message: "All Skills", status: 200 };
     } catch (error) {
       return {
-        data: error,
+        data: [],
         message: "Error in getting all skills",
         status: 500,
       };
@@ -129,14 +129,14 @@ export const getSkillsbyLocale = async (locale: Locale) => {
 
   if (!result || !result.data) return null;
 
-  const localizedSkills = result.data.map((skill: SkillTranslated) => ({
+  const localizedSkills = result.data.map((skill: NewSkill) => ({
  
     name: locale === "ar" ? skill.name_ar : skill.name_en,
     description: locale === "ar" ? skill.description_ar : skill.description_en,
   }));
 
   return {
-    data: localizedSkills,
+    data: localizedSkills as SkillTranslated[],
     message: result.message,
     status: result.status,
   };

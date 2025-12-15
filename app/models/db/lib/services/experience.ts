@@ -4,7 +4,6 @@ import { type NewExperience,ExperienceTranslated } from "@/types/index";
 
 type Locale = "en" | "ar";
 
-
 export const addExperience = async (data: NewExperience) => {
   try {
     const result = await pool.query(
@@ -22,10 +21,11 @@ export const addExperience = async (data: NewExperience) => {
         data.end_date,
         data.location_en,
         data.location_ar,
-        data.current_job
+        data.current_job,
       ]
     );
-   revalidateTag("experiences","max");
+
+    revalidateTag("experiences","max");
 
     return {
       data: result.rows,
@@ -33,11 +33,18 @@ export const addExperience = async (data: NewExperience) => {
       status: 201,
     };
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.log("SQL Error:", error);
 
-    // Only one current job
-    if (error.code === "23505" && error.constraint === "only_one_current_job") {
+    // Type narrowing for PostgreSQL error
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "code" in error &&
+      "constraint" in error &&
+      (error as { code: string; constraint: string }).code === "23505" &&
+      (error as { code: string; constraint: string }).constraint === "only_one_current_job"
+    ) {
       return {
         data: null,
         message: "You already have a current job. Please end it before adding a new one.",
@@ -63,7 +70,7 @@ export const getAllExperiences = unstable_cache(
       return { data: result.rows, message: "All Experiences", status: 200 };
     } catch (error) {
       return {
-        data: error,
+        data: [],
         message: "Error In Getting All Experiences",
         status: 500,
       };
@@ -188,16 +195,17 @@ export const getExperiencebyLocale = async (locale: Locale) => {
 
   if (!result || !result.data) return null;
 
-  const localizedExperience = result.data.map((experience: ExperienceTranslated) => ({
-    ...experience, 
+  const localizedExperience = result.data.map((experience: NewExperience) => ({
+    start_date: experience.start_date,
+    end_date:experience.end_date,
+    current_job:experience.current_job,
     positions: locale === "ar" ? experience.positions_ar : experience.positions_en,
     description: locale === "ar" ? experience.description_ar : experience.description_en,
-
     location: locale === "ar" ? experience.location_ar : experience.location_en,
   }));
 
   return {
-    data: localizedExperience,
+    data: localizedExperience as ExperienceTranslated[] ,
     message: result.message,
     status: result.status,
   };

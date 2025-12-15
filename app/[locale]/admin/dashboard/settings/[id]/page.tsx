@@ -1,5 +1,4 @@
-import React from "react";
-import Head from "next/head";
+
 import { getSettingbyId } from "@/app/models/db/lib/services/settings";
 import { editSettingAction } from "../(fetch)/editSetting";
 import EditSettingForm from "@/components/settings/editSettingForm";

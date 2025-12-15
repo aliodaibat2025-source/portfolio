@@ -71,7 +71,7 @@ const Login = () => {
           onSubmit={onSubmit}
           dir={isArabic ? "rtl" : "ltr"}
         >
-          <h1 className="text-2xl flex justify-center border-b-2 border-[#676e32] mb-4 pb-2 dark:text-black">
+          <h1 className="text-2xl flex justify-center border-b-2 border-[black] text-black mb-4 pb-2 dark:text-gray-700">
             {isArabic ? "تسجيل الدخول" : "Login"}
           </h1>
 
@@ -129,7 +129,7 @@ const Login = () => {
           <button
             disabled={loading}
             type="submit"
-            className="text-white bg-[#676e32] hover:bg-[#848e38] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center cursor-pointer"
+            className="text-white bg-black hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center cursor-pointer"
           >
             {loading
               ? isArabic
@@ -142,7 +142,7 @@ const Login = () => {
 
           <Link
             href="/forgot-password"
-            className="block pt-4 text-center text-sm text-[#676e32] underline-offset-4 hover:underline m-2 "
+            className="block pt-4 text-center text-sm text-black underline-offset-4 hover:underline m-2 "
           >
             {isArabic ? "نسيت كلمة المرور؟" : "Forgot your password?"}
           </Link>
@@ -154,7 +154,7 @@ const Login = () => {
               data-slot="separator"
               className="bg-border data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px flex-1"
             ></div>
-            <span className="mx-2 font-black text-[#676e32]">OR</span>
+            <span className="mx-2 font-black text-black">OR</span>
             <div 
               data-orientation="horizontal"
               role="none"
@@ -174,7 +174,7 @@ const Login = () => {
 
           <Link
             href="/"
-            className="block pt-4 text-center text-sm underline-offset-4 text-[#676e32] hover:underline m-2 "
+            className="block pt-4 text-center text-sm underline-offset-4 text-black hover:underline m-2 "
           >
             {isArabic ? "العودة إلى الصفحة الرئيسية" : "Back To Home Page"}
           </Link>

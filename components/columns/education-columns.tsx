@@ -81,7 +81,8 @@ export const educationColumns: ColumnDef<NewEducation>[] = [
     ),
     cell: ({ row }) => {
       const val = row.getValue("description_en") as string;
-      return <div>{val}</div>;
+      return <div>{val.slice(0, 30)}{val.length > 30 ? "..." : ""}</div>;;
+;
     },
 
     enableSorting: true,
@@ -100,7 +101,8 @@ export const educationColumns: ColumnDef<NewEducation>[] = [
     ),
     cell: ({ row }) => {
       const val = row.getValue("description_ar") as string;
-      return <div>{val}</div>;
+
+      return <div>{val.slice(0, 30)}{val.length > 30 ? "..." : ""}</div>;;
     },
 
     enableSorting: true,

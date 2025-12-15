@@ -28,7 +28,7 @@ export async function createSkillAction(data:NewSkill) {
 
   const result = await addSkill(data)
 
-  revalidatePath(`/dashboard/skills`);
+  revalidatePath(`/admin/dashboard/skills`);
 
   return {
     status: 200,

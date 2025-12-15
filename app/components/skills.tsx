@@ -19,7 +19,7 @@ type dataType={
 
 
 type SkillsProps = {
-  skills:SkillTranslated[];
+  skills:SkillTranslated[]|undefined;
   textInSkills:dataType|null
 };
 
@@ -91,7 +91,7 @@ export default function Skills({ skills,textInSkills }: SkillsProps) {
       </p>
 
       <div className="flex flex-wrap justify-center gap-4 max-w-4xl">
-        {skills.map((skill, index) => (
+        {skills!.map((skill, index) => (
           <span
             key={index}
             className="skill-tag bg-gray-900 text-white shadow-lg px-5 py-2 rounded-full font-medium hover:bg-gray-700 transition cursor-default"

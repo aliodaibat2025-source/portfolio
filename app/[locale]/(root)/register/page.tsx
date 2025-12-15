@@ -114,7 +114,7 @@ const RegisterPage = () => {
         className="max-w-lg w-full p-7 rounded-lg bg-white border border-gray-300 shadow-sm shadow-slate-500/50 m-7"
         onSubmit={onSubmit}
       >
-        <h1 className="text-2xl flex justify-center border-b-2 border-[#676e32] mb-4 pb-2">
+        <h1 className="text-2xl flex justify-center border-b-2 border-[black] text-black mb-4 pb-2">
           {isArabic ? "إنشاء حساب" : "Register"}
         </h1>
 
@@ -252,7 +252,7 @@ const RegisterPage = () => {
         <button
           disabled={loading}
           type="submit"
-          className="w-full px-5 py-2.5 cursor-pointer text-sm font-medium text-white bg-[#676e32] rounded-lg hover:bg-[#848e38] focus:ring-4 focus:outline-none focus:ring-blue-300"
+          className="w-full px-5 py-2.5 cursor-pointer text-sm font-medium text-white bg-[black] rounded-lg hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-blue-300"
         >
           {loading
             ? isArabic
@@ -269,7 +269,7 @@ const RegisterPage = () => {
             data-slot="separator"
             className="bg-border data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px flex-1"
           ></div>
-          <span className="mx-2 font-black text-[#676e32]">OR</span>
+          <span className="mx-2 font-black text-[black]">OR</span>
           <div
             data-orientation="horizontal"
             role="none"
@@ -287,7 +287,7 @@ const RegisterPage = () => {
         </button>
         <Link
           href="/login"
-          className="block pt-4 text-center text-sm text-[#676e32] cursor-pointer underline-offset-4 hover:underline m-2"
+          className="block pt-4 text-center text-sm text-[black] cursor-pointer underline-offset-4 hover:underline m-2"
         >
           {isArabic ? "هل لديك حساب بالفعل؟" : "Already have an account?"}
         </Link>

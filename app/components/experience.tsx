@@ -2,32 +2,29 @@
 
 import ExperienceHeader from "./ExperienceHeader";
 import ExperienceBody from "./ExperienceBody";
+import { ExperienceTranslated } from "@/types";
 
 type dataType = {
   value: string | undefined;
   name: string | undefined;
 };
+type Locale = "en" | "ar";
+
 
 export type ExperienceProps = {
-  experience?: Array<{
-    id: string;
-    positions: string;
-    description: string;
-    start_date: string;
-    end_date: string;
-    location: string;
-  }>;
+  experience?: ExperienceTranslated[];
   textInExperience?: dataType | null;
+  locale?:Locale
 };
 
-const Experience = ({ experience, textInExperience }: ExperienceProps) => {
+const Experience = ({ experience, textInExperience, locale}: ExperienceProps) => {
   return (
     <section
       id="experience"
       className="min-h-screen bg-linear-to-br from-gray-800 via-black to-gray-800 px-6 py-20"
     >
       <ExperienceHeader textInExperience={textInExperience} />
-      <ExperienceBody experience={experience} />
+      <ExperienceBody experience={experience}  locale={locale}/>
     </section>
   );
 };

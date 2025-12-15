@@ -35,6 +35,12 @@ interface Option {
 }
 
  const defaultOptions: Option[] = [
+  {
+      value: "name_in_header",
+      label: "Name In Header",
+      type: "text",
+      placeholder: "",
+    },
     {
       value: "position_in_header",
       label: "Position In Header",

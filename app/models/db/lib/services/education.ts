@@ -1,6 +1,7 @@
 import { revalidateTag, unstable_cache } from "next/cache";
 import pool from "..";
-import { NewEducation } from "@/types/index";
+import { NewEducation,EducationTranslated } from "@/types/index";
+type Locale = "en" | "ar";
 
 export const addEducation = async (data: NewEducation) => {
   try {
@@ -52,7 +53,7 @@ export const getAllEducations = unstable_cache(
       return { data: result.rows, message: "All Educations", status: 200 };
     } catch (error) {
       return {
-        data: error,
+        data: [],
         message: "Error In Getting All Educations",
         status: 500,
       };
@@ -157,4 +158,25 @@ export const editEducation = async (
       status: 500,
     };
   }
+};
+
+
+export const getEducationByLocale = async (locale: Locale) => {
+  const result = await getAllEducations();
+
+  if (!result || !result.data) return null;
+
+  const localizedEducation = result.data.map((education: NewEducation) => ({
+    start_date:education.start_date,
+    end_date:education.end_date, 
+    title: locale === "ar" ? education.title_ar : education.title_en,
+    description: locale === "ar" ? education.description_ar : education.description_en,
+    location: locale === "ar" ? education.location_ar : education.location_en,
+  }));
+
+  return {
+    data: localizedEducation as EducationTranslated[] ,
+    message: result.message,
+    status: result.status,
+  };
 };

@@ -19,9 +19,10 @@ interface Props {
   position: dataType | null;
   bioInHeader: dataType | null;
   imageInHero: dataType | null;
+  nameInHeader: dataType | null;
 }
 
-export default function Hero({ position, bioInHeader, imageInHero }: Props) {
+export default function Hero({ position, bioInHeader, imageInHero,nameInHeader }: Props) {
 
   
  const t = useTranslations("settings");
@@ -82,7 +83,7 @@ export default function Hero({ position, bioInHeader, imageInHero }: Props) {
 
       <div className="hero-text relative z-20 md:w-1/2 space-y-6 text-white mt-4 md:mt-0 text-start">
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold leading-tight">
-          Mohammad
+          {nameInHeader?.value}
         </h1>
 
         <h2 className="text-2xl sm:text-3xl font-medium text-gray-300 tracking-wide">
@@ -93,7 +94,7 @@ export default function Hero({ position, bioInHeader, imageInHero }: Props) {
           {bioInHeader?.value}
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 mt-4">
+        <div className="flex flex-row sm:flex-row gap-4 mt-4 ">
           <a
             href="#experience"
             className="px-6 py-3 bg-white text-black rounded-lg text-lg sm:text-xl font-medium 

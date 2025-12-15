@@ -8,14 +8,18 @@ import { ScrollTrigger } from "gsap/all";
 import { NewEmail } from "@/types";
 import { toast } from "sonner";
 gsap.registerPlugin(ScrollTrigger);
-
+type dataType = {
+  value: string | undefined;
+  name: string | undefined;
+};
 interface Props {
   emailAction: (
     data: NewEmail
-  ) => Promise<{ data: NewEmail; message: string; status: number } | undefined>;
+  ) => Promise<{ data: null; message: string; status: number } | undefined>;
+  textContactSection: dataType | null;
 }
 
-export default function Contact({ emailAction }: Props) {
+export default function Contact({ emailAction,textContactSection }: Props) {
 
   const t = useTranslations(); // استخدام الترجمة العامة
   const [isPending, startTransition] = useTransition();
@@ -127,10 +131,10 @@ export default function Contact({ emailAction }: Props) {
     startTransition(async () => {
       try {
         await emailAction(payload);
-        toast.success(t("contact.message_sent_success")); // استخدم الترجمة هنا
+        toast.success(t("contact.message_sent_success")); 
         resetForm();
       } catch (err) {
-        let msg = t("contact.something_went_wrong"); // استخدم الترجمة هنا
+        let msg = t("contact.something_went_wrong"); 
         if (err instanceof Error) msg = err.message;
         toast.error(msg);
       }
@@ -147,32 +151,35 @@ export default function Contact({ emailAction }: Props) {
       </h2>
 
       <p className="contact-text text-gray-300 text-center text-lg max-w-2xl mb-12">
-        {t("contact.contact")} {/* الترجمة للنصوص العامة */}
+        {textContactSection?.value} 
       </p>
 
-      <div className="contact-info flex flex-col md:flex-row gap-8 mb-12 text-white">
-        <div className="flex items-center gap-3">
-          <FaEnvelope className="text-xl text-yellow-400" />
-          <span>Email@example.com</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <FaPhone className="text-xl text-purple-400" />
-          <span>+123 456 7890</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <FaLinkedin className="text-xl text-blue-400" />
-          <span>
-            <a
-              href="https://www.linkedin.com/in/mohammad"
-              target="_blank"
-              className="hover:underline"
-              rel="noreferrer"
-            >
-              linkedin.com/in/mohammad
-            </a>
-          </span>
-        </div>
-      </div>
+      <div className="contact-info flex flex-col md:flex-row gap-8 mb-12 text-white " dir="ltr">
+  <div className="flex items-center gap-3">
+    <FaEnvelope className="text-xl text-yellow-400" />
+    <span>{process.env.NEXT_PUBLIC_CONTACT_EMAIL}</span>
+  </div>
+
+  <div className="flex items-center gap-3">
+    <FaPhone className="text-xl text-purple-400" />
+    <span>{process.env.NEXT_PUBLIC_PHONE_NUMBER}</span>
+  </div>
+
+  <div className="flex items-center gap-3">
+    <FaLinkedin className="text-xl text-blue-400" />
+    <span>
+      <a
+        href={process.env.LINKEDIN_URL}
+        target="_blank"
+        rel="noreferrer"
+        className="hover:underline"
+      >
+        {process.env.LINKEDIN_URL?.replace(/^https?:\/\//, '')}
+      </a>
+    </span>
+  </div>
+</div>
+
 
       <form
         onSubmit={handleSubmit}
@@ -182,7 +189,7 @@ export default function Contact({ emailAction }: Props) {
         <div className="flex gap-3 flex-col lg:flex-row">
           <input
             type="text"
-            placeholder={t("contact.first_name")} // الترجمة للـ placeholder
+            placeholder={t("contact.first_name")} 
             className="flex-1 border border-gray-700 rounded-lg p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
@@ -190,7 +197,7 @@ export default function Contact({ emailAction }: Props) {
           />
           <input
             type="text"
-            placeholder={t("contact.last_name")} // الترجمة للـ placeholder
+            placeholder={t("contact.last_name")} 
             className="flex-1 border border-gray-700 rounded-lg p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
@@ -200,7 +207,7 @@ export default function Contact({ emailAction }: Props) {
 
         <input
           type="email"
-          placeholder={t("contact.email")} // الترجمة للـ placeholder
+          placeholder={t("contact.email")} 
           className="border border-gray-700 rounded-lg p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -208,7 +215,7 @@ export default function Contact({ emailAction }: Props) {
         />
         <input
           type="text"
-          placeholder={t("contact.phone")} // الترجمة للـ placeholder
+          placeholder={t("contact.phone")} 
           className="border border-gray-700 rounded-lg p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
@@ -216,14 +223,14 @@ export default function Contact({ emailAction }: Props) {
         />
         <input
           type="text"
-          placeholder={t("contact.subject")} // الترجمة للـ placeholder
+          placeholder={t("contact.subject")} 
           className="border border-gray-700 rounded-lg p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
           disabled={isPending}
         />
         <textarea
-          placeholder={t("contact.message")} // الترجمة للـ placeholder
+          placeholder={t("contact.message")} 
           rows={5}
           className="border border-gray-700 rounded-lg p-3 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-gray-500"
           value={message}
@@ -235,7 +242,7 @@ export default function Contact({ emailAction }: Props) {
           className="bg-yellow-400 text-black px-6 py-3 rounded-lg font-medium hover:bg-yellow-300 transition"
           disabled={isPending}
         >
-          {isPending ? "Sending..." : "Send Message"}
+          {isPending ? t("contact.sending") : t("contact.send_message")}
         </button>
       </form>
     </section>

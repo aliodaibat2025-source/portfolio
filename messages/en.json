@@ -29,6 +29,8 @@
     "contact": "Feel free to reach out to me for collaborations, interviews, or general inquiries.",
     "error_fill_fields": "Please fill First name, Email, Subject and Message fields.",
     "message_sent_success": "Message sent successfully!",
-    "something_went_wrong": "Something went wrong while sending message."
+    "something_went_wrong": "Something went wrong while sending message.",
+    "send_message":"Send Message",
+    "sending":"Sending"
   }
 }

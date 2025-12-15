@@ -27,11 +27,8 @@ export async function editSkillAction(skillId: string, data: NewSkill) {
 
   // ❗ Call the DB service
   const result = await editSkill(skillId, data);
-
-console.log("result result result: ",result);
-
   // Successful update
-  revalidatePath(`/dashboard/skills`);
+  revalidatePath(`/admin/dashboard/skills`);
 
   return {
     status: 200,

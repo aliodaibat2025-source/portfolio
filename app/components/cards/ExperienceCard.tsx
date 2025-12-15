@@ -41,7 +41,7 @@ export default function ExperienceCard({ experience }: ExperienceCardProps) {
   }, [experience.start_date, experience.end_date]); 
 
   return (
-    <div className="experience-card bg-gray-900 shadow-xl p-8 rounded-xl hover:shadow-2xl transition flex flex-col items-center text-center border border-gray-700">
+    <div className="experience-card  bg-gray-900 shadow-xl p-8 rounded-xl hover:shadow-2xl transition flex flex-col items-center text-center border border-gray-700">
       <h3 className="text-xl font-semibold mb-2 text-white">{experience.positions}</h3>
       <p className="text-gray-300 mb-2">{experience.description}</p>
       <div className="flex justify-center items-center gap-2">

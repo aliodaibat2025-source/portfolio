@@ -17,7 +17,7 @@ interface Props {
   action: (data: NewExperience) => Promise<{
     status: number;
     message: string;
-    data?: NewExperience;
+    data?: unknown;
   }>;
 }
 
