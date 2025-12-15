@@ -19,7 +19,7 @@ interface Props {
   position: dataType | null;
   bioInHeader: dataType | null;
   imageInHero: dataType | null;
-  nameInHeader: dataType | null;
+  nameInHeader:dataType | null;
 }
 
 export default function Hero({ position, bioInHeader, imageInHero,nameInHeader }: Props) {
@@ -67,7 +67,7 @@ export default function Hero({ position, bioInHeader, imageInHero,nameInHeader }
   return (
     <section
       id="home"
-      className="min-h-screen flex flex-col-reverse md:flex-row items-center justify-center
+      className="min-h-screen flex flex-col-reverse md:flex-row items-center justify-end gap-8
                  px-4 sm:px-6 md:px-20 pt-28 bg-black relative overflow-hidden"
     >
       <div
@@ -94,7 +94,7 @@ export default function Hero({ position, bioInHeader, imageInHero,nameInHeader }
           {bioInHeader?.value}
         </p>
 
-        <div className="flex flex-row sm:flex-row gap-4 mt-4 ">
+        <div className="flex flex-row gap-4 mt-4">
           <a
             href="#experience"
             className="px-6 py-3 bg-white text-black rounded-lg text-lg sm:text-xl font-medium 

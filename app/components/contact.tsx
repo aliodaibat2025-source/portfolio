@@ -165,19 +165,7 @@ export default function Contact({ emailAction,textContactSection }: Props) {
     <span>{process.env.NEXT_PUBLIC_PHONE_NUMBER}</span>
   </div>
 
-  <div className="flex items-center gap-3">
-    <FaLinkedin className="text-xl text-blue-400" />
-    <span>
-      <a
-        href={process.env.LINKEDIN_URL}
-        target="_blank"
-        rel="noreferrer"
-        className="hover:underline"
-      >
-        {process.env.LINKEDIN_URL?.replace(/^https?:\/\//, '')}
-      </a>
-    </span>
-  </div>
+  
 </div>
 
 

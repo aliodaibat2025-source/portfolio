@@ -12,16 +12,16 @@
   "settings": {
     "aboutme": "عني",
     "watchmyworkinaction": "نص",
-    "skills": "مهاراتي",
-    "experience": "خبراتي",
-    "education&certifications": "شهاداتي و تعليمي",
+    "skills": "المهارات",
+    "experience": "الخبرات",
+    "education&certifications": "الشهادات",
     "contact": "تواصل معي",
-    "myexperience":"خبراتي",
+    "myexperience":"الخبرات",
 "contactme":"تواصل معي",
     "rights":"جميع الحقوق محفوظة."
   },
   "contact": {
-    "heading": "اتصل بنا",
+    "heading": "التواصل",
     "first_name": "الاسم الأول",
     "last_name": "الاسم الأخير",
     "email": "البريد الإلكتروني",

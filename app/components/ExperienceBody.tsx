@@ -37,10 +37,10 @@ const ExperienceBody = ({ experience, locale }: ExperienceProps) => {
   return (
     <div className="min-h-screen px-6 py-20 relative">
       <div className="absolute inset-0 flex justify-center pt-16">
-        <div className="w-0.5 bg-white/50 h-full" />
+        <div className="w-0.5 hidden md:block bg-white/50 h-full" />
       </div>
 
-      <div className="experience-grid flex flex-col items-center gap-60 mt-20 max-w-5xl mx-auto  overflow-x-hidden">
+      <div className="experience-grid flex flex-col items-center  gap-10 mt-20 max-w-5xl mx-auto  overflow-x-hidden">
         {experience!.map((exp, index) => (
           <div
             key={exp.id}
@@ -57,7 +57,7 @@ const ExperienceBody = ({ experience, locale }: ExperienceProps) => {
   </span>
 </div>
 
-              <span className="text-gray-400 text-sm">{exp.location}</span>
+              <span className=" text-gray-400 text-sm">{exp.location}</span>
             </div>
           </div>
         ))}

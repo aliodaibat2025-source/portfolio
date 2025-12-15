@@ -55,8 +55,9 @@ export default function Header() {
       <div className="max-w-6xl mx-auto flex items-center justify-between py-6 px-4 md:justify-self-center">
 
         {/* DESKTOP NAV */}
-        <nav className="hidden md:flex gap-8 font-medium text-white">
-          {sections.map((section) => (
+        <nav className="flex flex-row gap-6">
+          <div className="hidden md:flex gap-8 font-medium text-white">
+            {sections.map((section) => (
             <button 
               key={section} 
               onClick={() => handleClick(section)}
@@ -65,6 +66,8 @@ export default function Header() {
               {t(section)}
             </button>
           ))}
+          </div>
+          
           <Languageswitcher />
         </nav>
 
