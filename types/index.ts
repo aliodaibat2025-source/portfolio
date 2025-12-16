@@ -1,18 +1,4 @@
-export type newClient = {
-  id?: string;
-  name: string;
-  logo: string;
-};
 
-export type newCategory = {
-  id?: string;
-  slug?: string;
-  category_name_en: string;
-  category_name_ar: string;
-  description_en: string;
-  description_ar: string;
-  image: string | null;
-};
 
 export type user = {
   id: string;
@@ -39,24 +25,7 @@ export type users = {
   password: string;
 };
 
-export type newTraining = {
-  id?: string;
-  name_en: string;
-  name_ar: string;
-  description_en: string;
-  description_ar: string;
-  category_en: string;
-  category_ar: string;
-  start_date: Date;
-  end_date: Date;
-  price: number;
-  capacity: number;
-  card_image: string;
-  is_deleted: boolean;
-  slug: string;
-  post_image: string;
-  header_image: string;
-};
+
 export type newUser = {
   id?: string;
   first_name: string;
@@ -88,30 +57,6 @@ export type userInfo = {
   password: string;
 };
 
-export type BannerData = {
-  id: string;
-  alt: string;
-  image: string;
-  description_en: string;
-  description_ar: string;
-};
-
-export type newBanner = {
-  id?: string;
-  alt: string;
-  description_en: string;
-  description_ar: string;
-  image: string | null;
-  created_at?: Date;
-};
-
-export type getClients = {
-  id?: string;
-  name: string;
-  logo: string;
-  created_at: Date;
-};
-
 export type newSetting = {
   id?: string;
   key_name_en?: string;
@@ -121,134 +66,6 @@ export type newSetting = {
   created_at?: Date;
 };
 
-export type RoomBookingWithDetails = {
-  id?: string;
-  start_time: Date;
-  end_time: Date;
-  created_at: Date;
-  is_confirmed: boolean;
-  is_deleted: boolean;
-  user_id: string;
-  first_name: string;
-  last_name?: string;
-  email: string;
-  room_id: string;
-  name_en: string;
-  description_en: string;
-  name_ar: string;
-  description_ar: string;
-  cover_image: string;
-  price: number;
-  room_images: string[];
-  room_type_en: string;
-  room_type_ar: string;
-  booking_price: number;
-  slug: string;
-};
-
-export type ActivityBookingWithDetails = {
-  id: string;
-  is_confirmed: boolean;
-  is_deleted: boolean;
-  created_at: Date;
-  quantity: number;
-
-  start_time: Date;
-  end_time: Date;
-  booking_price: number;
-  activity_id?: string;
-  name_en: string;
-  name_ar: string;
-  description_en: string;
-  description_ar: string;
-  location_type_en: string;
-  location_type_ar: string;
-  card_image: string;
-  poster_image: string;
-  header_image: string;
-  capacity: number;
-  activity_price: number;
-  slug: string;
-
-  //user Deatils
-
-  user_id: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-};
-
-export type TrainingBookingWithDetails = {
-  id: string; // training_booking id
-  training_id: string;
-  is_confirmed: boolean;
-  is_deleted: boolean;
-  created_at: Date;
-  quantity: number;
-  price: number;
-
-  user_id: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-
-  // Training details
-  name_en: string;
-  description_en: string;
-  name_ar: string;
-  description_ar: string;
-  card_image: string;
-  category_en: string;
-  category_ar: string;
-  capacity: number;
-  training_price: number;
-  start_date: Date;
-  end_date: Date;
-  slug: string;
-  post_image: string;
-  header_image: string;
-};
-
-export type roomFeatures = {
-  id?: string;
-  feature_title_en: string;
-  feature_description_en: string;
-  feature_title_ar: string;
-  feature_description_ar: string;
-  room_id?: string;
-};
-
-export type newRoom = {
-  id?: string;
-  name_en: string;
-  description_en: string;
-  name_ar: string;
-  description_ar: string;
-  cover_image: string;
-  price: number;
-  room_images: string[];
-  is_deleted?: boolean;
-  features: roomFeatures[];
-  room_type_en: string;
-  room_type_ar: string;
-  slug: string;
-};
-
-export type modifiedRoom = {
-  id?: string;
-  name_en: string;
-  description_en: string;
-  name_ar: string;
-  description_ar: string;
-  cover_image: string;
-  price: number;
-  room_images: string[];
-  is_deleted?: boolean;
-  room_features: roomFeatures[];
-  room_type_en: string;
-  room_type_ar: string;
-  slug: string;
-};
 
 export type tokenPayload = {
   user_id: string;
@@ -256,145 +73,11 @@ export type tokenPayload = {
   name: string;
 };
 
-export type newBooking = {
-  id?: string;
-  start_time: Date;
-  end_time: Date;
-  created_at?: Date;
-  is_confirmed?: boolean;
-  user_id: string;
-  room_id: string;
-  price?: number;
-};
-
 export type userDetails = {
   id?: string;
   email: string;
   role: string;
   first_name: string;
-};
-
-export type newActivity = {
-  id?: string;
-  name_en: string;
-  name_ar: string;
-  description_en: string;
-  description_ar: string;
-  location_type_en: string;
-  location_type_ar: string;
-  card_image: string;
-  poster_image: string;
-  header_image: string;
-  capacity: number;
-  price: number;
-  slug: string;
-  minimum_quantity: number;
-  coming_soon: boolean;
-};
-
-export type newActivityBooking = {
-  id?: string;
-  start_time: Date;
-  end_time?: Date;
-  created_at?: Date;
-  is_confirmed?: boolean;
-  user_id?: string;
-  activity_id?: string;
-  quantity: number;
-  price?: number;
-};
-
-export type updateActivityBooking = {
-  id?: string;
-  start_time: Date;
-  end_time: Date;
-  created_at: Date;
-  is_confirmed: boolean;
-  activity_id: string;
-  quantity: number;
-};
-
-export type newTrainingBooking = {
-  id?: string;
-  user_id: string;
-  training_id: string;
-  quantity: number;
-  is_confirmed?: boolean;
-  is_deleted?: boolean;
-  created_at?: Date;
-  price?: number;
-};
-
-export type newCart = {
-  id?: string;
-  user_id?: string;
-  total_amount: number;
-  created_at?: Date;
-  checked_out_at?: Date;
-  expires_at?: Date;
-  is_paid?: boolean;
-};
-
-export type cartWithItems = {
-  id?: string;
-  user_id: string;
-  total_amount: number;
-  created_at: Date;
-  checked_out_at: Date;
-  booking_type: string;
-  booking_id: string;
-  price: number;
-};
-
-export type newCartItem = {
-  id?: string;
-  cart_id: string;
-  created_at?: Date;
-  booking_type: string;
-  booking_id: string;
-  price: number;
-};
-
-export interface DisableBookingData {
-  id?: string;
-  type: "activity" | "room";
-  ref_id: string;
-  start_date: string | null;
-  end_date: string | null;
-}
-
-export interface GetDisabledDatesParams {
-  type: "activity" | "room";
-  ref_id: string;
-}
-
-export type EmailData = {
-  accountName: string;
-  note?: string;
-  email: string;
-  userId: string;
-  amount: number;
-  expireAt: string;
-};
-
-export type UnifiedBooking = {
-  id: string;
-  type: "activity" | "room" | "training";
-
-  user_id: string;
-  first_name: string;
-  last_name?: string;
-
-  start: Date;
-  end: Date;
-
-  created_at: Date;
-  price: number;
-  training_price?: number;
-  booking_price?: number;
-  name_en: string;
-  slug: string;
-  is_confirmed: boolean;
 };
 
 export type NewEmail = {
@@ -422,8 +105,6 @@ export type NewExperience = {
 };
 export type ExperienceTranslated = {
   id?: string;
-  
- 
   positions: string;
   description: string;
   start_date: Date;

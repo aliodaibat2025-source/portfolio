@@ -64,8 +64,8 @@ export default function VideoPlayer({ src, title, className }: VideoPlayerProps)
 
   return (
     <div className={`video-container w-full ${className || ""}`}>
-      <div className="video-player-container w-full rounded-xl overflow-hidden shadow-2xl border border-gray-700 bg-black">
-        
+      <div className="video-player-container relative w-full rounded-xl overflow-hidden shadow-2xl border border-gray-700 bg-black">
+
         {/* VIDEO */}
         <video
           ref={videoRef}
@@ -87,35 +87,18 @@ export default function VideoPlayer({ src, title, className }: VideoPlayerProps)
           "
         />
 
-        {/* CONTROLS - MOBILE */}
-        <div className="flex md:hidden items-center justify-between px-4 py-3 bg-black">
+        {/* CONTROLS - ALL SCREENS */}
+        <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center pointer-events-auto">
           <button
             onClick={togglePlay}
-            className="bg-white/10 text-white p-3 rounded-full"
+            className="bg-black/70 text-white p-3 rounded-full hover:bg-black/90 transition"
           >
             {isPlaying ? <FaPause size={18} /> : <FaPlay size={18} />}
           </button>
 
           <button
             onClick={toggleMute}
-            className="bg-white/10 text-white p-3 rounded-full"
-          >
-            {isMuted ? <FaVolumeMute size={18} /> : <FaVolumeUp size={18} />}
-          </button>
-        </div>
-
-        {/* CONTROLS - DESKTOP */}
-        <div className="hidden md:flex absolute bottom-4 left-4 right-4 justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <button
-            onClick={togglePlay}
-            className="bg-black/60 text-white p-3 rounded-full hover:bg-black/80"
-          >
-            {isPlaying ? <FaPause size={18} /> : <FaPlay size={18} />}
-          </button>
-
-          <button
-            onClick={toggleMute}
-            className="bg-black/60 text-white p-3 rounded-full hover:bg-black/80"
+            className="bg-black/70 text-white p-3 rounded-full hover:bg-black/90 transition"
           >
             {isMuted ? <FaVolumeMute size={18} /> : <FaVolumeUp size={18} />}
           </button>

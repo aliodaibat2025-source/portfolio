@@ -7,7 +7,8 @@ export default async function Layout({ children }: { children: React.ReactNode }
     <SidebarProvider defaultOpen={true}>
       <AppSidebar />
       <main>
-        <SidebarTrigger />
+        <SidebarTrigger className="text-black" />
+        
         {children}
       </main>
       
