@@ -76,7 +76,7 @@ const RegisterPage = () => {
         password: form.password,
       });
       if (loginResult?.ok) {
-        router.push("/");
+        router.push("/admin/dashboard");
       } else {
         setError(
           isArabic
@@ -101,8 +101,8 @@ const RegisterPage = () => {
   };
 
   const handleGoogleSignIn = async () => {
-    const result = await signIn("google", { callbackUrl: "/" });
-    if (result?.ok) router.replace("/");
+    const result = await signIn("google", { callbackUrl: "/admin/dashboard" });
+    if (result?.ok) router.replace("/admin/dashboard");
   };
 
   return (

@@ -47,7 +47,7 @@ const Login = () => {
     });
 
     if (valid?.ok === true) {
-      router.push("/");
+      router.push("/admin/dashboard");
     } else {
       setError(
         isArabic
@@ -60,7 +60,7 @@ const Login = () => {
   };
 
   const handleGoogleSignIn = async () => {
-     await signIn("google", { callbackUrl: "/" });
+     await signIn("google", { callbackUrl: "/admin/dashboard" });
   };
 
   return (
