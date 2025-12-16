@@ -19,34 +19,6 @@ async function Page(props: { params: Promise<{ id: string }> }) {
 
   return (
     <>
-      <Head>
-        <title>Edit User - Think Impact</title>
-        <meta
-          name="description"
-          content={`Edit user ${user[0].first_name}'s role and view account details in the Think Impact dashboard.`}
-        />
-        <link
-          rel="canonical"
-          href={process.env.NEXT_PUBLIC_APP_URL + `/admin/dashboard/users/${user[0].id}`}
-        />
-
-        {/* Open Graph */}
-        <meta property="og:title" content={`Edit User - ${user[0].first_name}`} />
-        <meta
-          property="og:description"
-          content={`Edit user ${user[0].first_name}'s role and view account details in the Think Impact dashboard.`}
-        />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:url"
-          content={process.env.NEXT_PUBLIC_APP_URL + `/admin/dashboard/users/${user[0].id}`}
-        />
-        <meta
-          property="og:image"
-          content={process.env.NEXT_PUBLIC_APP_URL + "/images/logo.png"}
-        />
-        <meta property="og:site_name" content="Think Impact" />
-      </Head>
 
       <main className="ml-7 mb-7">
         {/* Header */}

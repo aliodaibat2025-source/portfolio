@@ -6,9 +6,8 @@ import { deleteEmail } from "@/app/models/db/lib/services/contact";
 
 export async function deleteEmailAction(emailId:string) {
   const session = await getServerSession(authOptions);
-  const token = session?.user.token;
  
-  if (!token)  throw new Error("Please Log In")
+  if (!session)  throw new Error("Please Log In")
     if(session.user.role!=="admin")  throw new Error("Not Allowed")
 
   const result = await deleteEmail(emailId)

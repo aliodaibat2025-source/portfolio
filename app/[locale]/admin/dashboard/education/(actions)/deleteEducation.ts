@@ -6,10 +6,9 @@ import { deleteEducationsByDelete } from "@/app/models/db/lib/services/education
 
 export async function deleteEducationAction(educationId:string) {
   const session = await getServerSession(authOptions);
-  const token = session?.user.token;
  
   // ❗ Not logged in
-  if (!token) {
+  if (!session) {
      throw new Error("Please log in first.");
   }
 

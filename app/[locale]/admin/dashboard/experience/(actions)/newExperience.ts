@@ -7,10 +7,9 @@ import { NewExperience } from "@/types";
 
 export async function createExperienceAction(data:NewExperience) {
   const session = await getServerSession(authOptions);
-  const token = session?.user.token;
  
   // ❗ Not logged in
-  if (!token) {
+  if (!session) {
     return {
       status: 401,
       message: "Please log in first.",

@@ -7,10 +7,9 @@ import { NewEducation } from "@/types";
 
 export async function createEducationAction(data:NewEducation) {
   const session = await getServerSession(authOptions);
-  const token = session?.user.token;
  
   // ❗ Not logged in
-  if (!token) {
+  if (!session) {
     return {
       status: 401,
       message: "Please log in first.",

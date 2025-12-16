@@ -6,10 +6,9 @@ import { deleteExperienceByDelete } from "@/app/models/db/lib/services/experienc
 
 export async function deleteExperienceAction(experienceId:string) {
   const session = await getServerSession(authOptions);
-  const token = session?.user.token;
  
   // ❗ Not logged in
-  if (!token) {
+  if (!session) {
     throw new Error("Please log in first.")
   }
 

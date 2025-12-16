@@ -7,10 +7,9 @@ import { editSkill } from "@/app/models/db/lib/services/skills";
 
 export async function editSkillAction(skillId: string, data: NewSkill) {
   const session = await getServerSession(authOptions);
-  const token = session?.user.token;
 
   // ❗ Not logged in
-  if (!token) {
+  if (!session) {
     return {
       status: 401,
       message: "Please log in first.",

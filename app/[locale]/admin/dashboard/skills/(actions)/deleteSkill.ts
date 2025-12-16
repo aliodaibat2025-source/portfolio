@@ -6,10 +6,9 @@ import { deleteSkillById } from "@/app/models/db/lib/services/skills";
 
 export async function deleteSkillAction(skillId:string) {
   const session = await getServerSession(authOptions);
-  const token = session?.user.token;
  
   // ❗ Not logged in
-  if (!token)  
+  if (!session)  throw new Error("please Login.")
 
   // ❗ Not admin
   if (session?.user.role !== "admin") throw new Error("You are not allowed to perform this action.")
