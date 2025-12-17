@@ -34,7 +34,7 @@ export default async function RootLayout({ children, params }: Props) {
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <FontSwitcher locale={locale}>
-        <div className="flex flex-col min-h-screen " dir={dir}>
+        <div  className="flex flex-col min-h-screen " dir={dir}>
           <Header />
           <main className="flex-1">
             {children}
