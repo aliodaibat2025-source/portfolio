@@ -29,14 +29,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import {
-  ChevronDown,
-  ChevronRight,
-  ChevronLeft,
-  SquarePen,
-} from "lucide-react";
-import { useRouter } from "next/navigation";
+import { ChevronDown, ChevronLeft, ChevronRight, SquarePen } from "lucide-react";
+import { useRouter, usePathname } from "next/navigation";
 import BulkDeleteButton from "./BulkDeleteButton";
+
 declare module "@tanstack/react-table" {
   interface ColumnMeta<TData extends RowData, TValue> {
     hiddenByDefault?: boolean;
@@ -56,23 +52,22 @@ export function DataTable<TData>({
   routeName,
   deleteAction,
 }: DataTableProps<TData>) {
+  const pathname = usePathname();
+  const router = useRouter();
+
   const initialVisibility: VisibilityState = Object.fromEntries(
     columns
       .map((col) => {
-        const key =
-          col.id ?? (col as { accessorKey?: string }).accessorKey ?? undefined;
+        const key = col.id ?? (col as { accessorKey?: string }).accessorKey ?? undefined;
         if (!key) return [];
         return [key, col.meta?.hiddenByDefault ? false : true];
       })
       .filter((entry): entry is [string, boolean] => entry.length === 2)
   );
 
-  const [columnVisibility, setColumnVisibility] =
-    useState<VisibilityState>(initialVisibility);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(initialVisibility);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
-
-  const router = useRouter();
 
   const columnsWithActions: ColumnDef<TData>[] = [
     ...columns,
@@ -83,15 +78,17 @@ export function DataTable<TData>({
         const rowData = row.original as TData & { id: string };
         return (
           <div className="flex gap-2">
-            {<Button
-              size="sm"
-              variant="outline"
-              onClick={() => router.push(`${routeName}/${rowData.id}`)}
-              className="cursor-pointer"
-            >
-              <SquarePen />
-            </Button>
-            }<DeleteButton id={rowData.id ?? ""} deleteAction={deleteAction} />
+            {pathname !== "/admin/dashboard/gallery" && (
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => router.push(`${routeName}/${rowData.id}`)}
+                className="cursor-pointer"
+              >
+                <SquarePen />
+              </Button>
+            )}
+            <DeleteButton id={rowData.id ?? ""} deleteAction={deleteAction} />
           </div>
         );
       },
@@ -117,32 +114,27 @@ export function DataTable<TData>({
   });
 
   const selectedRows = table.getSelectedRowModel().flatRows;
-console.log("table.getSelectedRowModel(): ",table.getSelectedRowModel());
-
-  const selectedIds = selectedRows.map(
-    (row) => (row.original as TData & { id: string }).id
-  );
+  const selectedIds = selectedRows.map((row) => (row.original as TData & { id: string }).id);
 
   return (
     <div className="space-y-4 mb-20 ml-0 mr-0 lg:ml-4 lg:mr-4 w-full text-gray-600">
-      {/* === Column Visibility Menu === */}
+      {/* Column Visibility Menu */}
       <div className="flex justify-end flex-row items-end gap-2">
-         {selectedIds.length > 0 && (
-        <BulkDeleteButton
-          ids={selectedIds}
-          deleteAction={deleteAction}
-          onFinish={() => {
-            setRowSelection({});
-            router.refresh?.();
-          }}
-        />
-      )}
+        {selectedIds.length > 0 && (
+          <BulkDeleteButton
+            ids={selectedIds}
+            deleteAction={deleteAction}
+            onFinish={() => {
+              setRowSelection({});
+              router.refresh?.();
+            }}
+          />
+        )}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="">
+            <Button variant="outline">
               View <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
-            
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Toggle Columns</DropdownMenuLabel>
@@ -163,29 +155,22 @@ console.log("table.getSelectedRowModel(): ",table.getSelectedRowModel());
         </DropdownMenu>
       </div>
 
-      {/* === Table === */}
+      {/* Table */}
       <div className="rounded-md border border-gray-300">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow
-                key={headerGroup.id}
-                className="border-b border-gray-300 hover:bg-gray-50"
-              >
+              <TableRow key={headerGroup.id} className="border-b border-gray-300 hover:bg-gray-50">
                 {headerGroup.headers.map((header) => (
                   <TableHead key={header.id}>
                     {header.isPlaceholder
                       ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                      : flexRender(header.column.columnDef.header, header.getContext())}
                   </TableHead>
                 ))}
               </TableRow>
             ))}
           </TableHeader>
-
           <TableBody>
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
@@ -196,20 +181,14 @@ console.log("table.getSelectedRowModel(): ",table.getSelectedRowModel());
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow className="border-b border-gray-300 hover:bg-gray-50">
-                <TableCell
-                  colSpan={columnsWithActions.length}
-                  className="h-24 text-center"
-                >
+                <TableCell colSpan={columnsWithActions.length} className="h-24 text-center">
                   No results.
                 </TableCell>
               </TableRow>
@@ -218,7 +197,7 @@ console.log("table.getSelectedRowModel(): ",table.getSelectedRowModel());
         </Table>
       </div>
 
-      {/* === Pagination === */}
+      {/* Pagination */}
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex items-center space-x-2">
           <span className="text-sm text-muted-foreground">Rows per page:</span>
@@ -240,7 +219,6 @@ console.log("table.getSelectedRowModel(): ",table.getSelectedRowModel());
           size="sm"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
-          className="cursor-pointer"
         >
           <ChevronLeft />
         </Button>
@@ -249,15 +227,13 @@ console.log("table.getSelectedRowModel(): ",table.getSelectedRowModel());
           size="sm"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
-          className="cursor-pointer"
         >
           <ChevronRight />
         </Button>
       </div>
 
       <div className="text-sm text-muted-foreground flex justify-end mr-4">
-        Page {table.getState().pagination.pageIndex + 1} of{" "}
-        {table.getPageCount()}
+        Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
       </div>
     </div>
   );

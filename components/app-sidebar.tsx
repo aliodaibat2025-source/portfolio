@@ -19,7 +19,8 @@ import {
   Settings,
   Briefcase,
   CirclePlus,
-  GraduationCap
+  GraduationCap,
+  GalleryVertical
 } from "lucide-react";
 
 
@@ -32,6 +33,7 @@ const items = [
   { title: "Experiences", url: "/admin/dashboard/experience", icon:Briefcase  },
   { title: "Skills", url: "/admin/dashboard/skills", icon:CirclePlus  },
   { title: "Education", url: "/admin/dashboard/education", icon:GraduationCap  },
+   { title: "Gallery", url: "/admin/dashboard/gallery", icon:GalleryVertical  },
 ];
 
 export function AppSidebar() {

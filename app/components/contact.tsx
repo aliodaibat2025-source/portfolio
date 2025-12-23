@@ -114,7 +114,7 @@ export default function Contact({ emailAction,textContactSection }: Props) {
     e.preventDefault();
 
     if (!firstName.trim() || !email.trim() || !message.trim() || !subject.trim()) {
-      toast.error(t("contact.error_fill_fields")); // استخدم الترجمة هنا
+      toast.error(t("contact.error_fill_fields")); 
       return;
     }
 
@@ -144,7 +144,7 @@ export default function Contact({ emailAction,textContactSection }: Props) {
   return (
     <section
       id="contact"
-      className=" h-fit flex flex-col items-center justify-center  bg-linear-to-br from-gray-800 via-black to-gray-800  px-6 py-20"
+      className=" h-fit flex flex-col items-center justify-center  bg-linear-to-bl from-gray-800 via-black to-gray-800  px-6 py-20"
     >
       <h2 className="contact-heading text-4xl font-bold mb-8 text-white text-center">
         {t("contact.heading")}
@@ -173,7 +173,6 @@ export default function Contact({ emailAction,textContactSection }: Props) {
         onSubmit={handleSubmit}
         className="contact-form w-full max-w-xl bg-gray-900 p-8 rounded-xl shadow-xl flex flex-col gap-4 border border-gray-700"
       >
-        {/* First + Last name inline */}
         <div className="flex gap-3 flex-col lg:flex-row">
           <input
             type="text"

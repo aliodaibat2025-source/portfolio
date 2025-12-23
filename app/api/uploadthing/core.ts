@@ -45,6 +45,12 @@ export const ourFileRouter = {
     return { uploadedUrl: file.url };
   }),
 
+  images: f({
+    image: { maxFileSize: "2MB", maxFileCount: 2 },
+  }).onUploadComplete(async ({ file }) => {
+    console.log("Image Upload Complete:", file.url);
+    return { uploadedUrl: file.url };
+  }),
   settings: f({
     video: {
       maxFileSize: "512MB",

@@ -24,6 +24,12 @@ export type users = {
   email: string;
   password: string;
 };
+export type gallery = {
+  id?: string;
+  image: string;
+
+};
+
 
 
 export type newUser = {

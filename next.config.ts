@@ -3,7 +3,7 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ["plus.unsplash.com", "www.shutterstock.com"],
+    domains: ["plus.unsplash.com", "www.shutterstock.com","picsum.photos" ],
     remotePatterns: [
       {
         protocol: "https",

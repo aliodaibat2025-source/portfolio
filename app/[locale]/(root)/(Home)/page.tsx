@@ -4,6 +4,7 @@ import About from "@/app/components/about";
 import Skills from "@/app/components/skills";
 import Experience from "@/app/components/experience";
 import Education from "@/app/components/education";
+import Gallery from "@/app/components/gallery";
 
 import Contact from "@/app/components/contact";
 import { sendEmailAction } from "@/app/[locale]/admin/dashboard/emails/(actions)/sendEmail";
@@ -11,6 +12,7 @@ import { getSkillsbyLocale } from "@/app/models/db/lib/services/skills";
 import { getExperiencebyLocale } from "@/app/models/db/lib/services/experience";
 import { getSettingbyLocale } from "@/app/models/db/lib/services/settings";
 import { getEducationByLocale } from "@/app/models/db/lib/services/education";
+import {getAllImages} from "@/app/models/db/lib/services/gallery"
 type Locale = "en" | "ar";
 
 interface PageProps {
@@ -26,6 +28,8 @@ export default async function Home({ params }: PageProps) {
   const skills = skillsdata?.data;
   const experiencedata=await getExperiencebyLocale(locale)
   const experience = experiencedata?.data;
+  const gallerydata=await getAllImages()
+  const gallery=gallerydata
   const educationData= await getEducationByLocale(locale)
   const education= educationData?.data
   const position= await getSettingbyLocale(locale,"position_in_header")
@@ -49,6 +53,7 @@ export default async function Home({ params }: PageProps) {
       <Skills skills={skills} textInSkills={textInSkills} />
       <Experience  experience={experience}  textInExperience={textInExperience} locale={locale}/>
       <Education textInEducation={textInEducation}  education={education}/>
+      <Gallery galleryimages={gallery}/>
       <Contact emailAction={sendEmailAction} textContactSection={textContactSection} />
     </main>
   );
