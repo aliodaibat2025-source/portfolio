@@ -54,7 +54,7 @@ export default async function Home({ params }: PageProps) {
       <Experience  experience={experience}  textInExperience={textInExperience} locale={locale}/>
       <Education textInEducation={textInEducation}  education={education}/>
       <Gallery galleryimages={gallery}/>
-      <Contact emailAction={sendEmailAction} textContactSection={textContactSection} />
+      <Contact emailAction={sendEmailAction} textContactSection={textContactSection} galleryimages={gallery.data} />
     </main>
   );
 }

@@ -34,6 +34,11 @@
     "something_went_wrong": "حدث خطأ أثناء إرسال الرسالة.",
     "send_message":"إرسال",
     "sending":"جاري الإرسال"
+  },
+    "gallery": {
+    "heading": "معرض الصور",
+    "no_images": "لا توجد صور.",
+    "image_alt": "صورة من المعرض"
   }
 }
 

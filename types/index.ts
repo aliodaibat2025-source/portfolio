@@ -27,8 +27,15 @@ export type users = {
 export type gallery = {
   id?: string;
   image: string;
+  
 
 };
+export type galleryn = {
+  id?: string;
+  image: string;
+
+};
+
 
 
 
