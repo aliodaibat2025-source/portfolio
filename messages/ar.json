@@ -18,7 +18,8 @@
     "contact": "تواصل معي",
     "myexperience":"الخبرات",
 "contactme":"تواصل معي",
-    "rights":"جميع الحقوق محفوظة."
+    "rights":"جميع الحقوق محفوظة.",
+    "powered":"تم الإنشاء بواسطة"
   },
   "contact": {
     "heading": "التواصل",
@@ -34,11 +35,6 @@
     "something_went_wrong": "حدث خطأ أثناء إرسال الرسالة.",
     "send_message":"إرسال",
     "sending":"جاري الإرسال"
-  },
-    "gallery": {
-    "heading": "معرض الصور",
-    "no_images": "لا توجد صور.",
-    "image_alt": "صورة من المعرض"
   }
 }
 

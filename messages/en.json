@@ -16,7 +16,8 @@
     "contact": "Contact",
     "myexperience": "My Experience",
     "contactme": "Contact Me",
-    "rights":"All Rights Reserved."
+    "rights":"All Rights Reserved.",
+    "powered":"Powered By"
   },
   "contact": {
     "heading": "Contact",
@@ -32,10 +33,5 @@
     "something_went_wrong": "Something went wrong while sending message.",
     "send_message":"Send Message",
     "sending":"Sending"
-  },
-    "gallery": {
-    "heading": "Gallery",
-    "no_images": "No images available.",
-    "image_alt": "Gallery Image"
   }
 }
