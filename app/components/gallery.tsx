@@ -28,9 +28,10 @@ type GalleryApiResponse = {
 
 type GalleryProps = {
   galleryimages: GalleryApiResponse;
+    isAr: boolean;
 };
 
-export default function Gallery({ galleryimages }: GalleryProps) {
+export default function Gallery({ galleryimages,isAr }: GalleryProps) {
   const t = useTranslations("gallery"); // استخدم مساحة الترجمة "gallery"
   const autoplay = useRef(
     Autoplay({ delay: 2500, stopOnInteraction: false })
@@ -50,7 +51,8 @@ export default function Gallery({ galleryimages }: GalleryProps) {
           {t("heading")}
         </h2>
 
-        <Carousel opts={{ loop: false }} plugins={[autoplay.current]}>
+        <Carousel opts={{ loop: false  ,  align: "start",
+        direction: isAr ? "rtl" : "ltr", }} plugins={[autoplay.current]}  >
           <CarouselContent className="flex -ml-1 py-6 w-full">
             {images.map((item, idx) => (
               <CarouselItem key={item.id} className="p-3 lg:basis-1/3">

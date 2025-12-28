@@ -23,6 +23,8 @@ interface PageProps {
 
 export default async function Home({ params }: PageProps) {
   const { locale } = await params;
+    const isAr = locale === 'ar'
+
 
   const skillsdata = await getSkillsbyLocale(locale);
   const skills = skillsdata?.data;
@@ -53,7 +55,7 @@ export default async function Home({ params }: PageProps) {
       <Skills skills={skills} textInSkills={textInSkills} />
       <Experience  experience={experience}  textInExperience={textInExperience} locale={locale}/>
       <Education textInEducation={textInEducation}  education={education}/>
-      <Gallery galleryimages={gallery}/>
+      <Gallery  isAr={isAr}  galleryimages={gallery}/>
       <Contact emailAction={sendEmailAction} textContactSection={textContactSection} galleryimages={gallery.data} />
     </main>
   );
