@@ -33,5 +33,9 @@
     "something_went_wrong": "Something went wrong while sending message.",
     "send_message":"Send Message",
     "sending":"Sending"
+  },
+  "gallery": {
+    "heading": "Gallery"
+
   }
 }

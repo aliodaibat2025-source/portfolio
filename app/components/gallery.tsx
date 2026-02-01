@@ -32,7 +32,7 @@ type GalleryProps = {
 };
 
 export default function Gallery({ galleryimages,isAr }: GalleryProps) {
-  const t = useTranslations("gallery"); // استخدم مساحة الترجمة "gallery"
+  const t = useTranslations("gallery"); 
   const autoplay = useRef(
     Autoplay({ delay: 2500, stopOnInteraction: false })
   );
@@ -62,7 +62,7 @@ export default function Gallery({ galleryimages,isAr }: GalleryProps) {
                       <div className="relative w-full aspect-[4/3]">
                         <Image
                           src={item.image}
-                          alt={`${t("image_alt")} ${idx + 1}`}
+                        alt={item.id!}
                           fill
                           className="object-cover block"
                         />
@@ -73,14 +73,14 @@ export default function Gallery({ galleryimages,isAr }: GalleryProps) {
                   <DialogContent className="max-w-full w-full h-auto md:max-w-4xl bg-transparent border-none rounded-lg">
                     <DialogTitle className="hidden">
                       <VisuallyHidden>
-                        {t("image_alt")} {idx + 1}
+                       {item.id!}
                       </VisuallyHidden>
                     </DialogTitle>
 
                     <div className="relative w-full aspect-[16/9]">
                       <Image
                         src={item.image}
-                        alt={`${t("image_alt")} ${idx + 1}`}
+                        alt={item.id!}
                         fill
                         className="object-cover rounded-lg"
                       />

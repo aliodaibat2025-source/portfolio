@@ -36,6 +36,11 @@
     "send_message":"إرسال",
     "sending":"جاري الإرسال"
   }
+  ,
+  "gallery": {
+    "heading": "معرض الصور"
+
+  }
 }
 
 
